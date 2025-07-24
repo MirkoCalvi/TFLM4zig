@@ -1,3 +1,0 @@
-0
-1003 1474610 1753017049834596248 195a63792c39c23ba3ced06dcf6b9aa0 0 /home/mirko/tflite-micro/tensorflow/lite/micro/system_setup.cc
-1107 1474611 1753017049835596248 d0fb9013f385476556c073006585ceae 0 /home/mirko/tflite-micro/tensorflow/lite/micro/system_setup.h
