@@ -1,59 +1,56 @@
 const cc_model = @cImport({
-    @cInclude("model/model.h");
+    @cInclude("models/wakeWord/model.h");
 });
 
 const std = @import("std");
 const tflm = @import("tflm.zig");
 
 pub fn main() !void {
+    // Print model information
     std.debug.print("\n-----------------------------\n", .{});
-    std.debug.print("Model address: {p}\n", .{&cc_model.models_audio_tflite});
-    std.debug.print("Model size: {}\n", .{cc_model.models_audio_tflite_len});
+    std.debug.print("Model address: {p}\n", .{&cc_model.tfl__model_tflite});
+    std.debug.print("Model size: {}\n", .{cc_model.tfl__model_tflite_len});
 
-    // Example: Slice over the model data
-    const data = cc_model.models_audio_tflite[0..cc_model.models_audio_tflite_len];
-    std.debug.print("model_data size: {x}\n", .{data.len});
-    std.debug.print("First byte: {x}\n", .{data[0]});
-    std.debug.print("last -5 byte: {x}\n", .{data[data.len - 5]});
+    // Get model data slice
+    const model_data = cc_model.tfl__model_tflite[0..cc_model.tfl__model_tflite_len];
+    std.debug.print("Model data size: {x}\n", .{model_data.len});
+    std.debug.print("First byte: {x}\n", .{model_data[0]});
+    std.debug.print("Last byte: {x}\n", .{model_data[model_data.len - 1]});
     std.debug.print("\n-----------------------------\n", .{});
 
+    // Initialize allocator
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
     // Create interpreter with appropriate arena size
-    // For micro_speech model, typically 20KB is sufficient
     const arena_size = 2048 * 10; // 20KB arena
-    std.debug.print("\n+++++++++ TFLMInterpreter initialization", .{});
-    var interpreter = try tflm.TFLMInterpreter.init(allocator, arena_size);
+    std.debug.print("\n+++++++++ TFLMInterpreter initialization\n", .{});
+    var interpreter = try tflm.TFLMInterpreter.init(allocator, arena_size, model_data);
     defer interpreter.deinit();
 
-    // Get input buffer and populate it with your data
-    std.debug.print("\n+++++++++ getInputBuffer", .{});
+    // Get and check input buffer size
+    std.debug.print("\n+++++++++ Getting input buffer\n", .{});
     const input_buffer = interpreter.getInputBuffer(0);
-    std.log.info("Input buffer size: {}", .{input_buffer.len});
+    std.debug.print("Input buffer size: {}\n", .{input_buffer.len});
 
-    // For audio models, input is typically audio features or raw audio samples
-    // Example: Fill input with some test data
+    // Fill input with test data
     for (input_buffer, 0..) |*val, i| {
-        val.* = @as(f32, @floatFromInt(i)) * 0.001; // Small values for audio features
+        val.* = @as(f32, @floatFromInt(i)) * 0.01;
     }
 
     // Run inference
+    std.debug.print("\n+++++++++ Running inference\n", .{});
     try interpreter.invoke();
 
-    // Get output (for audio models, typically classification probabilities)
+    // Get and process output
     const output_buffer = interpreter.getOutputBuffer(0);
-    std.log.info("Output buffer size: {}", .{output_buffer.len});
+    std.debug.print("Output buffer size: {}\n", .{output_buffer.len});
 
     // Print results
-    const classes = [_][]const u8{ "Class_0", "Class_1", "Class_2", "Class_3" };
+    std.debug.print("\n+++++++++ Results:\n", .{});
     for (output_buffer, 0..) |val, i| {
-        if (i < classes.len) {
-            std.log.info("{s}: {d:.4}", .{ classes[i], val });
-        } else {
-            std.log.info("Output[{}]: {d:.4}", .{ i, val });
-        }
+        std.debug.print("Input[{}]: {d:.4} -> Output[{}]: {d:.4}\n", .{ i, input_buffer[i], i, val });
     }
 
     // Find the class with highest confidence
@@ -66,7 +63,6 @@ pub fn main() !void {
         }
     }
 
-    if (max_idx < classes.len) {
-        std.log.info("Predicted: {s} (confidence: {d:.4})", .{ classes[max_idx], max_val });
-    }
+    std.debug.print("\nPredicted class: {} (confidence: {d:.4})\n", .{ max_idx, max_val });
+    std.debug.print("\n-----------------------------\n", .{});
 }

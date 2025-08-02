@@ -6,5 +6,5 @@ zig-out/
 
 .env
 
-.onnx 
-.cc
+*.onnx 
+*.cc

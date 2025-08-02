@@ -1,121 +1,134 @@
-#include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 #include "tensorflow/lite/micro/micro_interpreter.h"
-#include "tensorflow/lite/micro/micro_log.h"
+#include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 #include "tensorflow/lite/micro/system_setup.h"
 #include "tensorflow/lite/schema/schema_generated.h"
-#include "model/model.h"
+#include "tensorflow/lite/micro/kernels/micro_ops.h"
+
+// Include signal processing ops
+#include "signal/micro/kernels/delay_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/energy_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/fft_auto_scale_kernel.h"
+#include "signal/micro/kernels/fft_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/filter_bank_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/filter_bank_log_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/filter_bank_spectral_subtraction_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/filter_bank_square_root.h"
+#include "signal/micro/kernels/framer_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/irfft.h"
+#include "signal/micro/kernels/overlap_add_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/pcan_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/rfft.h"
+#include "signal/micro/kernels/stacker_flexbuffers_generated_data.h"
+#include "signal/micro/kernels/window_flexbuffers_generated_data.h"
+
+// Include signal src processing ops
+#include "signal/src/window.h"
+#include "signal/src/energy.h"
+#include "signal/src/fft_auto_scale.h"
+#include "signal/src/rfft.h"
+#include "signal/src/filter_bank.h"
+#include "signal/src/filter_bank_square_root.h"
+#include "signal/src/filter_bank_spectral_subtraction.h"
+#include "signal/src/filter_bank_log.h"
+#include "signal/src/pcan_argc_fixed.h"
+
+// Globals to hold interpreter state
+namespace {
+    constexpr int kTensorArenaSize = 20 * 1024;
+    const tflite::Model* model = nullptr;
+    tflite::MicroInterpreter* interpreter = nullptr;
+    tflite::MicroMutableOpResolver<10>* op_resolver = nullptr;  
+}
+
+// Debugging custom op registration with correct type
+const TFLMRegistration* Register_CUSTOM_OP(const char* custom_name) {
+    static TFLMRegistration r = {
+        nullptr,  // init
+        nullptr,  // prepare
+        nullptr,  // invoke
+        nullptr   // free
+    };
+    printf("Warning: Custom op '%s' not implemented yet\n", custom_name);
+    return &r;
+}
 
 extern "C" {
-    // Opaque pointer types for C interface
-    typedef struct TFLMInterpreter TFLMInterpreter;
-    
-    // Initialize TFLM
     void tflm_init() {
         tflite::InitializeTarget();
     }
-    
-    // Create interpreter with model from your generated model.cc
-    TFLMInterpreter* tflm_create_interpreter_from_model(unsigned char* tensor_arena, 
-                                                       size_t arena_size) {
-        // Get model from the generated model.cc file
-        const tflite::Model* model = tflite::GetModel(models_audio_tflite);
+
+    void* tflm_create_interpreter_from_model(uint8_t* arena_buf, size_t arena_size, const uint8_t* model_data) {
+        model = tflite::GetModel(model_data);
         if (model->version() != TFLITE_SCHEMA_VERSION) {
-            MicroPrintf("Model provided is schema version %d not equal to supported version %d.",
-                       model->version(), TFLITE_SCHEMA_VERSION);
+            printf("Model version mismatch: expected %d, got %d\n",
+                   TFLITE_SCHEMA_VERSION, model->version());
             return nullptr;
         }
-        
-        // Create mutable resolver and add the ops your model needs
-        // Based on your model, it appears to use audio processing ops
-        // You may need to adjust this based on your specific model requirements
-        static tflite::MicroMutableOpResolver<20> resolver;
-        
-        // Common ops for audio models
-        resolver.AddReshape();
-        resolver.AddCast();
-        resolver.AddStridedSlice();
-        resolver.AddConcatenation();
-        resolver.AddAdd();
-        resolver.AddMul();
-        resolver.AddSub();
-        resolver.AddFullyConnected();
-        resolver.AddSoftmax();
-        resolver.AddQuantize();
-        resolver.AddDequantize();
-        resolver.AddConv2D();
-        resolver.AddDepthwiseConv2D();
-        resolver.AddMaxPool2D();
-        resolver.AddAveragePool2D();
-        resolver.AddPack();
-        resolver.AddUnpack();
-        resolver.AddSplit();
-        resolver.AddSplitV();
-        resolver.AddSqueeze();
-        
-        // Create interpreter
-        static tflite::MicroInterpreter* interpreter = new tflite::MicroInterpreter(
-            model, resolver, tensor_arena, arena_size);
-        
-        // Allocate tensors
+
+        printf("Creating op resolver...\n");
+        op_resolver = new tflite::MicroMutableOpResolver<10>();
+
+        printf("Registering common NN operators...\n");
+        // Basic Math
+        op_resolver->AddAdd();
+        op_resolver->AddSub();
+        op_resolver->AddMul();
+        op_resolver->AddDiv();
+
+        op_resolver->AddSum();
+       
+
+        // Print model info
+        const auto* opcodes = model->operator_codes();
+        if (opcodes) {
+            printf("Model contains %d operator codes:\n", opcodes->size());
+            for (size_t i = 0; i < opcodes->size(); ++i) {
+                const auto* opcode = opcodes->Get(i);
+                const int builtin_code = opcode->builtin_code();
+                const char* custom_code = opcode->custom_code() ? opcode->custom_code()->c_str() : "null";
+                printf("Op #%zu: builtin_code=%d, custom_code=%s\n", i, builtin_code, custom_code);
+                
+                // For custom ops, just print a warning for now
+                if (builtin_code == tflite::BuiltinOperator_CUSTOM) {
+                    printf(" !!! Warning: Custom op '%s' will be stubbed\n", custom_code);
+                    //op_resolver->AddCustom(custom_code, Register_CUSTOM_OP(custom_code));
+                }
+            }
+        }
+
+        printf("Creating interpreter...\n");
+        interpreter = new tflite::MicroInterpreter(
+            model, *op_resolver, arena_buf, arena_size);
+
+        printf("Allocating tensors...\n");
         TfLiteStatus allocate_status = interpreter->AllocateTensors();
         if (allocate_status != kTfLiteOk) {
-            MicroPrintf("AllocateTensors() failed");
+            printf("AllocateTensors failed with status: %d\n", allocate_status);
             return nullptr;
         }
-        
-        MicroPrintf("Model loaded successfully!");
-        MicroPrintf("Number of inputs: %d", interpreter->inputs_size());
-        MicroPrintf("Number of outputs: %d", interpreter->outputs_size());
-        
-        // Print input tensor info
-        for (int i = 0; i < interpreter->inputs_size(); i++) {
-            TfLiteTensor* input = interpreter->input(i);
-            MicroPrintf("Input %d: shape [", i);
-            for (int j = 0; j < input->dims->size; j++) {
-                MicroPrintf("%d", input->dims->data[j]);
-                if (j < input->dims->size - 1) MicroPrintf(", ");
-            }
-            MicroPrintf("]");
-        }
-        
-        // Print output tensor info
-        for (int i = 0; i < interpreter->outputs_size(); i++) {
-            TfLiteTensor* output = interpreter->output(i);
-            MicroPrintf("Output %d: shape [", i);
-            for (int j = 0; j < output->dims->size; j++) {
-                MicroPrintf("%d", output->dims->data[j]);
-                if (j < output->dims->size - 1) MicroPrintf(", ");
-            }
-            MicroPrintf("]");
-        }
-        
-        return reinterpret_cast<TFLMInterpreter*>(interpreter);
+
+        printf("Interpreter created successfully\n");
+        return interpreter;
     }
-    
-    // Get input tensor
-    float* tflm_get_input_buffer(TFLMInterpreter* interp, int input_index) {
-        auto* interpreter = reinterpret_cast<tflite::MicroInterpreter*>(interp);
-        TfLiteTensor* input = interpreter->input(input_index);
-        return input->data.f;
+
+    float* tflm_get_input_buffer(void* handle, int input_index) {
+        auto* interpreter = static_cast<tflite::MicroInterpreter*>(handle);
+        return interpreter->input(input_index)->data.f;
     }
-    
-    // Get output tensor
-    float* tflm_get_output_buffer(TFLMInterpreter* interp, int output_index) {
-        auto* interpreter = reinterpret_cast<tflite::MicroInterpreter*>(interp);
-        TfLiteTensor* output = interpreter->output(output_index);
-        return output->data.f;
+
+    float* tflm_get_output_buffer(void* handle, int output_index) {
+        auto* interpreter = static_cast<tflite::MicroInterpreter*>(handle);
+        return interpreter->output(output_index)->data.f;
     }
-    
-    // Run inference
-    int tflm_invoke(TFLMInterpreter* interp) {
-        auto* interpreter = reinterpret_cast<tflite::MicroInterpreter*>(interp);
+
+    int tflm_invoke(void* handle) {
+        auto* interpreter = static_cast<tflite::MicroInterpreter*>(handle);
         TfLiteStatus invoke_status = interpreter->Invoke();
         return (invoke_status == kTfLiteOk) ? 0 : -1;
     }
-    
-    // Get input/output dimensions
-    int tflm_get_input_size(TFLMInterpreter* interp, int input_index) {
-        auto* interpreter = reinterpret_cast<tflite::MicroInterpreter*>(interp);
+
+    int tflm_get_input_size(void* handle, int input_index) {
+        auto* interpreter = static_cast<tflite::MicroInterpreter*>(handle);
         TfLiteTensor* input = interpreter->input(input_index);
         int size = 1;
         for (int i = 0; i < input->dims->size; i++) {
@@ -123,9 +136,9 @@ extern "C" {
         }
         return size;
     }
-    
-    int tflm_get_output_size(TFLMInterpreter* interp, int output_index) {
-        auto* interpreter = reinterpret_cast<tflite::MicroInterpreter*>(interp);
+
+    int tflm_get_output_size(void* handle, int output_index) {
+        auto* interpreter = static_cast<tflite::MicroInterpreter*>(handle);
         TfLiteTensor* output = interpreter->output(output_index);
         int size = 1;
         for (int i = 0; i < output->dims->size; i++) {

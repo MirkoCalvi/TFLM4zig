@@ -1,5 +1,4 @@
 const std = @import("std");
-const tflm_def = @import("tflm_def.zig");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -40,6 +39,11 @@ pub fn build(b: *std.Build) void {
     exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = downloads_path ++ "/ruy" });
     exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = downloads_path ++ "/kissfft" });
     exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = downloads_path ++ "/kissfft/tools" });
+
+    // -- Add all necessary include paths for signal --
+    const signal_path = tflm_tree ++ "/signal";
+    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = signal_path });
+    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = signal_path ++ "/micro/kernels" });
 
     const tflm_flags = &[_][]const u8{
         "-std=c++17",
@@ -83,8 +87,18 @@ pub fn build(b: *std.Build) void {
         .flags = tflm_flags,
     });
 
+    // -------------------------- recursively collect all .cpp under tflm_tree/signal --------------------------
+    var cpp_files_tflm_tree_signal_list = collectFromDir(b, &cwd, "tflm_tree/signal") catch unreachable;
+    const cpp_files_tflm_tree_signal = cpp_files_tflm_tree_signal_list.toOwnedSlice() catch unreachable;
+    cpp_files_tflm_tree_signal_list.deinit();
     exe.addCSourceFiles(.{
-        .root = b.path("src/model"),
+        .root = std.Build.LazyPath{ .cwd_relative = tflm_tree },
+        .files = cpp_files_tflm_tree_signal,
+        .flags = tflm_flags,
+    });
+
+    exe.addCSourceFiles(.{
+        .root = b.path("src/models/wakeWord"),
         .files = &.{"model.cc"},
         .flags = tflm_flags,
     });

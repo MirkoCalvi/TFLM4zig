@@ -1,0 +1,38 @@
+{
+  "model_name": "resnet50",
+  "model_used": "resnet50_float32.tflite",
+  "add_calls": [
+    {
+      "op_name": "ADD",
+      "add_call": "op_resolver->AddAdd();"
+    },
+    {
+      "op_name": "CONV_2D",
+      "add_call": "op_resolver->AddConv2D();"
+    },
+    {
+      "op_name": "FULLY_CONNECTED",
+      "add_call": "op_resolver->AddFullyConnected();"
+    },
+    {
+      "op_name": "MAX_POOL_2D",
+      "add_call": "op_resolver->AddMaxPool2D();"
+    },
+    {
+      "op_name": "MEAN",
+      "add_call": "op_resolver->AddMean();"
+    },
+    {
+      "op_name": "PAD",
+      "add_call": "op_resolver->AddPad();"
+    },
+    {
+      "op_name": "PADV2",
+      "add_call": "op_resolver->AddPadV2();"
+    }
+  ],
+  "missing_ops": [
+    "DELEGATE"
+  ],
+  "number_of_ops_used": 8
+}
