@@ -1,6 +1,16 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
+    const build_options = b.addOptions();
+    const model_name = b.option([]const u8, "model_name", "Name of the model") orelse {
+        std.debug.print("❌ Error: -Dmodel_name=\" your_model_name\" is required\n", .{});
+        return;
+    };
+    build_options.addOption([]const u8, "model_name", model_name);
+
+    const root_model_path = b.fmt("src/models/{s}", .{model_name});
+    const root_model = b.path(root_model_path);
+
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
@@ -14,6 +24,8 @@ pub fn build(b: *std.Build) void {
         .name = "tflm4zig",
         .root_module = exe_mod,
     });
+
+    exe_mod.addOptions("build_options", build_options);
 
     exe.linkLibCpp();
 
@@ -98,13 +110,13 @@ pub fn build(b: *std.Build) void {
     });
 
     exe.addCSourceFiles(.{
-        .root = b.path("src/models/wakeWord"),
+        .root = root_model,
         .files = &.{"model.cc"},
         .flags = tflm_flags,
     });
 
     exe.addCSourceFiles(.{
-        .root = b.path("src"),
+        .root = root_model,
         .files = &.{"tflm_wrapper.cpp"},
         .flags = tflm_flags,
     });

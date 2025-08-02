@@ -1,5 +1,7 @@
+const build_options = @import("build_options");
+
 const cc_model = @cImport({
-    @cInclude("models/wakeWord/model.h");
+    @cInclude("models/mob_net/model.h");
 });
 
 const std = @import("std");
@@ -24,7 +26,7 @@ pub fn main() !void {
     const allocator = gpa.allocator();
 
     // Create interpreter with appropriate arena size
-    const arena_size = 2048 * 10; // 20KB arena
+    const arena_size = 1024 * 1024 * 600; // 600MB arena
     std.debug.print("\n+++++++++ TFLMInterpreter initialization\n", .{});
     var interpreter = try tflm.TFLMInterpreter.init(allocator, arena_size, model_data);
     defer interpreter.deinit();

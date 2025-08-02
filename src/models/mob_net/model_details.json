@@ -1,0 +1,42 @@
+{
+  "model_name": "mob_net",
+  "model_used": "mob_net_float32.tflite",
+  "add_calls": [
+    {
+      "op_name": "ADD",
+      "add_call": "op_resolver->AddAdd();"
+    },
+    {
+      "op_name": "CONV_2D",
+      "add_call": "op_resolver->AddConv2D();"
+    },
+    {
+      "op_name": "DEPTHWISE_CONV_2D",
+      "add_call": "op_resolver->AddDepthwiseConv2D();"
+    },
+    {
+      "op_name": "MUL",
+      "add_call": "op_resolver->AddMul();"
+    },
+    {
+      "op_name": "PAD",
+      "add_call": "op_resolver->AddPad();"
+    },
+    {
+      "op_name": "SOFTMAX",
+      "add_call": "op_resolver->AddSoftmax();"
+    },
+    {
+      "op_name": "SUB",
+      "add_call": "op_resolver->AddSub();"
+    },
+    {
+      "op_name": "TRANSPOSE",
+      "add_call": "op_resolver->AddTranspose();"
+    }
+  ],
+  "missing_ops": [
+    "DELEGATE"
+  ],
+  "number_of_ops_used": 9
+}
