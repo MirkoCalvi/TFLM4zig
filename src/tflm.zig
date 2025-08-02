@@ -58,7 +58,6 @@ pub const TFLMInterpreter = struct {
             return error.InterpreterCreationFailed;
         };
 
-        std.debug.print("Interpreter created successfully\n", .{});
         return TFLMInterpreter{
             .handle = handle,
             .arena = arena,

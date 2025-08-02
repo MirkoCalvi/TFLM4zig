@@ -37,8 +37,10 @@ pub fn main() !void {
     std.debug.print("Input buffer size: {}\n", .{input_buffer.len});
 
     // Fill input with test data
-    for (input_buffer, 0..) |*val, i| {
-        val.* = @as(f32, @floatFromInt(i)) * 0.01;
+    var prng = std.Random.DefaultPrng.init(@intCast(std.time.nanoTimestamp()));
+    const rng = prng.random();
+    for (input_buffer) |*val| {
+        val.* = rng.float(f32) * @as(f32, @floatFromInt(rng.intRangeAtMost(i8, -120, 120)));
     }
 
     // Run inference
@@ -52,7 +54,7 @@ pub fn main() !void {
     // Print results
     std.debug.print("\n+++++++++ Results:\n", .{});
     for (output_buffer, 0..) |val, i| {
-        std.debug.print("Input[{}]: {d:.4} -> Output[{}]: {d:.4}\n", .{ i, input_buffer[i], i, val });
+        std.debug.print("Output[{}]: {d:.4}\n", .{ i, val });
     }
 
     // Find the class with highest confidence
