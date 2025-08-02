@@ -5,3 +5,6 @@ zig-cache/
 zig-out/
 
 .env
+
+.onnx 
+.cc
