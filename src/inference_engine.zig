@@ -1,7 +1,7 @@
 const build_options = @import("build_options");
 
 const cc_model = @cImport({
-    @cInclude("models/mobilenet_v2_imagenette/model.h");
+    @cInclude("models/mob_net/model.h");
 });
 
 const std = @import("std");
@@ -9,75 +9,47 @@ const tflm = @import("tflm.zig");
 
 pub const Engine = struct {
     interpreter: tflm.TFLMInterpreter,
-    allocator_storage: std.heap.GeneralPurposeAllocator(.{}),
-    allocator: std.mem.Allocator,
+    arena_buffer: []u8, // raw bytes for arena
+    arena_allocator: std.heap.ArenaAllocator,
 
     /// One-time initializer. Call this once at program startup.
-    pub fn init(arena_size: usize) Engine {
-        // Build a  &[u8] view over your model
-        const data = cc_model.tfl__model_tflite[0..cc_model.tfl__model_tflite_len];
+    pub fn init(arena_size: usize) !*Engine {
 
-        var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-        const alloc = gpa.allocator();
-        std.debug.print("\n+++++++++ TFLMInterpreter initialization\n", .{});
-        const interp = tflm.TFLMInterpreter.init(alloc, arena_size, data) catch {
-            gpa.deinit();
-            return null;
+        // Build a  &[u8] view over your model
+        const data = cc_model.tfl__model_tflite[0..230912];
+
+        // carve out a big byte buffer
+        const arena_buf = std.heap.page_allocator.alloc(u8, arena_size) catch |err| {
+            std.debug.print("OOM allocating arena buffer: {}\n", .{err});
+            return err;
         };
+
+        // an ArenaAllocator wrapper around that buffer
+        var fixed = std.heap.FixedBufferAllocator.init(arena_buf);
+        var arena = std.heap.ArenaAllocator.init(fixed.allocator());
+        const alloc = arena.allocator();
+
+        std.debug.print("\n+++++++++ TFLMInterpreter initialization\n", .{});
+
+        const interp = try tflm.TFLMInterpreter.init(alloc, arena_size, data);
 
         // allocate Engine itself from the general-purpose allocator
         // so the pointer is stable
-        const e_ptr = alloc.create(Engine) catch {
-            interp.deinit();
-            gpa.deinit();
-            return null;
-        };
+        const e_ptr = try alloc.create(Engine);
         e_ptr.* = Engine{
             .interpreter = interp,
-            .allocator_storage = gpa,
-            .allocator = alloc,
+            .arena_buffer = arena_buf,
+            .arena_allocator = arena,
         };
         return e_ptr;
-    }
-
-    /// Run one inference. You pass in your input buffer (must match model’s input size),
-    /// and it returns the output slice.
-    pub fn predict(
-        self: *Engine,
-        input_ptr: [*]const f32,
-        input_len: usize,
-        output_ptr: [*]f32,
-        output_len: usize,
-    ) i8 {
-        const in_buf = self.interpreter.getInputBuffer(0);
-        if (in_buf.len != input_len) return -1; // input buffer size mismatch
-
-        // copy input
-        std.debug.print("\n+++++++++ Getting input buffer\n", .{});
-        for (in_buf, 0..) |*dst, i| {
-            dst.* = input_ptr[i];
-        }
-
-        std.debug.print("\n+++++++++ Running inference ...", .{});
-        if (self.interpreter.invoke()) |_| {
-            return -2; // error invoking the interpreter
-        }
-        std.debug.print("\n+++++++++ Inference completed successfully.\n", .{});
-
-        const out_buf = self.interpreter.getOutputBuffer(0);
-        if (out_buf.len != output_len) return -3; // output buffer size mismatch
-        for (out_buf, 0..) |v, i| {
-            output_ptr[i] = v;
-        }
-        return 0;
     }
 
     /// Destroy/free the Engine
     pub fn deinit(self: *Engine) void {
         self.interpreter.deinit();
-        _ = self.allocator_storage.deinit();
-        // free the Engine struct itself:
-        self.allocator.destroy(self);
+        // give back the raw buffer
+        std.heap.page_allocator.free(self.arena_buffer);
+        // no need to deinit the ArenaAllocator itself
     }
 };
 
@@ -85,30 +57,59 @@ pub const Engine = struct {
 // C API exports
 //---------------------------------------------------------------------------
 
+var global_engine: ?*Engine = null;
 /// Opaque handle
-pub const EngineHandle = [*]Engine;
+pub const EngineHandle = ?*Engine;
 
 /// Errors returned by init
-pub const InitError = enum(i32) {
-    OutOfMemory = 1,
+pub const InitError = error{
+    TFLMInterpreterError,
+    CreateFailed,
 };
 
 /// export functions with C ABI
-export fn inference_init(arena_size: usize) EngineHandle {
-    return @ptrCast(Engine.init(arena_size) orelse null);
+pub export fn inference_init(arena_size: usize) EngineHandle {
+    if (global_engine) |h| return h;
+    global_engine = Engine.init(arena_size) catch |err| {
+        std.debug.print("Failed to initialize inference engine: {}\n", .{err});
+        return null;
+    };
+    return global_engine;
 }
 
-export fn inference_predict(
-    h: EngineHandle,
-    input_ptr: [*]const f32,
-    input_len: usize,
-    output_ptr: [*]f32,
-    output_len: usize,
-) c_int {
-    if (h == null) return -10;
-    return h.predict(input_ptr, input_len, output_ptr, output_len);
+pub export fn inference_deinit() void {
+    if (global_engine) |h| {
+        h.deinit();
+        global_engine = null;
+    }
 }
 
-export fn inference_deinit(h: EngineHandle) void {
-    if (h != null) h.deinit();
+pub export fn inference_input_buffer_ptr() [*]f32 {
+    const eng = global_engine orelse @panic("Engine not initialized");
+    const slice = eng.interpreter.getInputBuffer(0);
+    return slice.ptr;
+}
+
+pub export fn inference_input_len() usize {
+    const eng = global_engine orelse @panic("Engine not initialized");
+    return eng.interpreter.getInputBuffer(0).len;
+}
+
+pub export fn inference_output_buffer_ptr() [*]f32 {
+    const eng = global_engine orelse @panic("Engine not initialized");
+    const slice = eng.interpreter.getOutputBuffer(0);
+    return slice.ptr;
+}
+
+pub export fn inference_output_len() usize {
+    const eng = global_engine orelse @panic("Engine not initialized");
+    return eng.interpreter.getOutputBuffer(0).len;
+}
+
+pub export fn inference_invoke() i8 {
+    const eng = global_engine orelse @panic("Engine not initialized");
+    eng.interpreter.invoke() catch return -1;
+
+    // return 0 on success, -1 on failure
+    return 0;
 }
