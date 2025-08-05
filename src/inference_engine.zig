@@ -62,7 +62,7 @@ pub const InitError = error{
 };
 
 /// export functions with C ABI
-pub export fn inference_init(arena_size: usize) EngineHandle {
+pub export fn inference_init(arena_size: usize) callconv(.C) EngineHandle {
     if (global_engine) |h| return h;
 
     global_engine = Engine.init(arena_size) catch |err| {
@@ -73,36 +73,36 @@ pub export fn inference_init(arena_size: usize) EngineHandle {
     return global_engine;
 }
 
-pub export fn inference_deinit() void {
+pub export fn inference_deinit() callconv(.C) void {
     if (global_engine) |h| {
         h.deinit();
         global_engine = null;
     }
 }
 
-pub export fn inference_input_buffer_ptr() [*]f32 {
+pub export fn inference_input_buffer_ptr() callconv(.C) [*]f32 {
     const eng = global_engine orelse @panic("Engine not initialized");
     const slice = eng.interpreter.getInputBuffer(0);
     return slice.ptr;
 }
 
-pub export fn inference_input_len() usize {
+pub export fn inference_input_len() callconv(.C) usize {
     const eng = global_engine orelse @panic("Engine not initialized");
     return eng.interpreter.getInputBuffer(0).len;
 }
 
-pub export fn inference_output_buffer_ptr() [*]f32 {
+pub export fn inference_output_buffer_ptr() callconv(.C) [*]f32 {
     const eng = global_engine orelse @panic("Engine not initialized");
     const slice = eng.interpreter.getOutputBuffer(0);
     return slice.ptr;
 }
 
-pub export fn inference_output_len() usize {
+pub export fn inference_output_len() callconv(.C) usize {
     const eng = global_engine orelse @panic("Engine not initialized");
     return eng.interpreter.getOutputBuffer(0).len;
 }
 
-pub export fn inference_invoke() i8 {
+pub export fn inference_invoke() callconv(.C) i8 {
     const eng = global_engine orelse @panic("Engine not initialized");
     eng.interpreter.invoke() catch return -1;
     return 0;

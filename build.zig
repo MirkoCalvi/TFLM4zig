@@ -122,6 +122,51 @@ pub fn build(b: *std.Build) void {
     });
 
     b.installArtifact(exe);
+
+    // Run command
+    const run_cmd = b.addRunArtifact(exe);
+    run_cmd.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        run_cmd.addArgs(args);
+    }
+
+    const run_step = b.step("run", "Run the app");
+    run_step.dependOn(&run_cmd.step);
+
+    // --------------------------------------------------
+    // Create the static library
+    // --------------------------------------------------
+
+    const lib = b.addStaticLibrary(.{
+        .name = "tflm_inference",
+        .root_source_file = b.path("src/inference_engine.zig"), // Your main source file
+        .target = target,
+        .optimize = .ReleaseSmall,
+    });
+
+    // Add C include paths for your TensorFlow Lite headers
+    lib.addIncludePath(b.path("include"));
+    lib.addIncludePath(b.path("src"));
+    lib.addIncludePath(b.path("."));
+
+    // Link C libraries that your code depends on
+    lib.linkLibC();
+    // If you need C++ (TensorFlow Lite is C++)
+    lib.linkLibCpp();
+
+    // Install the library
+    b.installArtifact(lib);
+
+    // Create a header file installation step
+    const install_headers = b.addInstallFile(
+        b.path("include/inference_engine.h"),
+        "include/inference_engine.h",
+    );
+    b.getInstallStep().dependOn(&install_headers.step);
+
+    // Optional: Create a build step just for the library
+    const lib_step = b.step("lib", "Build the static library");
+    lib_step.dependOn(&lib.step);
 }
 
 fn collectFromDir(
