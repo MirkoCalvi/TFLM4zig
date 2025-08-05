@@ -43,7 +43,7 @@ namespace {
     constexpr int kTensorArenaSize = 20 * 1024;
     const tflite::Model* model = nullptr;
     tflite::MicroInterpreter* interpreter = nullptr;
-    tflite::MicroMutableOpResolver<9>* op_resolver = nullptr;
+    tflite::MicroMutableOpResolver<6>* op_resolver = nullptr;
 }
 
 // Debugging custom op registration with correct type
@@ -66,11 +66,9 @@ extern "C" {
         }
 
         printf("Creating op resolver...\n");
-        op_resolver = new tflite::MicroMutableOpResolver<9>();
+        op_resolver = new tflite::MicroMutableOpResolver<6>();
 
         printf("Registering common NN operators...\n");
-        // ADD
-        op_resolver->AddAdd();
         // CONV_2D
         op_resolver->AddConv2D();
         // MAX_POOL_2D

@@ -1,11 +1,7 @@
 {
   "model_name": "dummy",
-  "model_used": "dummy.tflite",
+  "model_used": "dummy_float32.tflite",
   "add_calls": [
-    {
-      "op_name": "ADD",
-      "add_call": "op_resolver->AddAdd();"
-    },
     {
       "op_name": "CONV_2D",
       "add_call": "op_resolver->AddConv2D();"
@@ -28,9 +24,7 @@
     }
   ],
   "missing_ops": [
-    "DELEGATE",
-    "READ_VARIABLE",
-    "VAR_HANDLE"
+    "DELEGATE"
   ],
-  "number_of_ops_used": 9
+  "number_of_ops_used": 6
 }
