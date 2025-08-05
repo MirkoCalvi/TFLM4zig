@@ -1,6 +1,7 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
+    // Define build options
     const build_options = b.addOptions();
     const model_name = b.option([]const u8, "model_name", "Name of the model") orelse {
         std.debug.print("❌ Error: -Dmodel_name=\" your_model_name\" is required\n", .{});
@@ -8,16 +9,13 @@ pub fn build(b: *std.Build) void {
     };
     build_options.addOption([]const u8, "model_name", model_name);
 
-    const root_model_path = b.fmt("src/models/{s}", .{model_name});
-    const root_model = b.path(root_model_path);
-
     const target = b.standardTargetOptions(.{});
-    const optimize = b.standardOptimizeOption(.{});
+    // const optimize = b.standardOptimizeOption(.{});
 
     const exe_mod = b.createModule(.{
         .root_source_file = b.path("src/main.zig"),
         .target = target,
-        .optimize = optimize,
+        .optimize = .ReleaseSmall,
     });
 
     const exe = b.addExecutable(.{
@@ -26,37 +24,33 @@ pub fn build(b: *std.Build) void {
     });
 
     exe_mod.addOptions("build_options", build_options);
-
     exe.linkLibCpp();
 
-    exe.addIncludePath(b.path("src"));
+    // -------------------- params --------------------
+    const root_model_path = b.fmt("src/models/{s}", .{model_name});
+    const root_model = b.path(root_model_path);
 
-    // Use the generated TFLM tree here instead of the original repo
     const tflm_tree = "/home/mirko/Documents/zig/tflm4zig/tflm_tree";
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = tflm_tree });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = tflm_tree ++ "/tensorflow" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = tflm_tree ++ "/tensorflow/lite" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = tflm_tree ++ "/tensorflow/lite/micro" });
-
-    // -- Add all necessary include paths for lite/micro --
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = tflm_tree ++ "/tensorflow/lite/micro/arena_allocators" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = tflm_tree ++ "/tensorflow/lite/micro/memory_planner" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = tflm_tree ++ "/tensorflow/lite/micro/tflite_bridge" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = tflm_tree ++ "/tensorflow/lite/micro/kernels" });
-
-    // -- Add all necessary include paths for third_party --
-    const downloads_path = tflm_tree ++ "/third_party";
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = downloads_path ++ "/flatbuffers/include" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = downloads_path ++ "/gemmlowp" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = downloads_path ++ "/ruy" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = downloads_path ++ "/kissfft" });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = downloads_path ++ "/kissfft/tools" });
-
-    // -- Add all necessary include paths for signal --
-    const signal_path = tflm_tree ++ "/signal";
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = signal_path });
-    exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = signal_path ++ "/micro/kernels" });
-
+    const dir_endings = &[_][]const u8{
+        "",
+        "/tensorflow",
+        "/tensorflow/lite",
+        "/tensorflow/lite/micro",
+        // -- Add all necessary include paths for lite/micro --
+        "/tensorflow/lite/micro/arena_allocators",
+        "/tensorflow/lite/micro/memory_planner",
+        "/tensorflow/lite/micro/tflite_bridge",
+        "/tensorflow/lite/micro/kernels",
+        // -- Add all necessary include paths for third_party --
+        "/third_party/flatbuffers/include",
+        "/third_party/gemmlowp",
+        "/third_party/ruy",
+        "/third_party/kissfft",
+        "/third_party/kissfft/tools",
+        // -- Add all necessary include paths for signal --
+        "/signal",
+        "/signal/micro/kernels",
+    };
     const tflm_flags = &[_][]const u8{
         "-std=c++17",
         "-DTF_LITE_STATIC_MEMORY",
@@ -77,38 +71,26 @@ pub fn build(b: *std.Build) void {
         // "-Os",
     };
 
+    // -------------------- include paths for the executable --------------------
+    exe.addIncludePath(b.path("src"));
+    includePathToExecutable(
+        tflm_tree, //root aka prefix
+        exe, // executable
+        dir_endings,
+    );
+
     // -------------------------- recursively collect all .cpp under tflm_tree/tensorflow --------------------------
-    var cwd = std.fs.cwd();
-
-    var cpp_files_tflm_tree_tensorflow_list = collectFromDir(b, &cwd, "tflm_tree/tensorflow") catch unreachable;
-    const cpp_files_tflm_tree_tensorflow = cpp_files_tflm_tree_tensorflow_list.toOwnedSlice() catch unreachable;
-    cpp_files_tflm_tree_tensorflow_list.deinit();
-    exe.addCSourceFiles(.{
-        .root = std.Build.LazyPath{ .cwd_relative = tflm_tree },
-        .files = cpp_files_tflm_tree_tensorflow,
-        .flags = tflm_flags,
-    });
-
-    // -------------------------- recursively collect all .cpp under tflm_tree/thirth_party --------------------------
-    var cpp_files_tflm_tree_thirth_party_list = collectFromDir(b, &cwd, "tflm_tree/third_party") catch unreachable;
-    const cpp_files_tflm_tree_thirth_party = cpp_files_tflm_tree_thirth_party_list.toOwnedSlice() catch unreachable;
-    cpp_files_tflm_tree_thirth_party_list.deinit();
-    exe.addCSourceFiles(.{
-        .root = std.Build.LazyPath{ .cwd_relative = tflm_tree },
-        .files = cpp_files_tflm_tree_thirth_party,
-        .flags = tflm_flags,
-    });
-
-    // -------------------------- recursively collect all .cpp under tflm_tree/signal --------------------------
-    var cpp_files_tflm_tree_signal_list = collectFromDir(b, &cwd, "tflm_tree/signal") catch unreachable;
-    const cpp_files_tflm_tree_signal = cpp_files_tflm_tree_signal_list.toOwnedSlice() catch unreachable;
-    cpp_files_tflm_tree_signal_list.deinit();
-    exe.addCSourceFiles(.{
-        .root = std.Build.LazyPath{ .cwd_relative = tflm_tree },
-        .files = cpp_files_tflm_tree_signal,
-        .flags = tflm_flags,
-    });
-
+    addCSourceFilesToExecutable(
+        b,
+        exe,
+        tflm_tree, // root
+        &.{
+            "tflm_tree/tensorflow", // recursively collect all .cpp under tflm_tree/tensorflow
+            "tflm_tree/third_party", // recursively collect all .cpp under tflm_tree/thirth_party
+            "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
+        },
+        tflm_flags,
+    );
     exe.addCSourceFiles(.{
         .root = root_model,
         .files = &.{"model.cc"},
@@ -133,9 +115,9 @@ pub fn build(b: *std.Build) void {
     const run_step = b.step("run", "Run the app");
     run_step.dependOn(&run_cmd.step);
 
-    // --------------------------------------------------
-    // Create the static library
-    // --------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    //                                        Create the static library
+    // ----------------------------------------------------------------------------------------------------
 
     const lib = b.addStaticLibrary(.{
         .name = "tflm_inference",
@@ -144,10 +126,38 @@ pub fn build(b: *std.Build) void {
         .optimize = .ReleaseSmall,
     });
 
-    // Add C include paths for your TensorFlow Lite headers
+    // -------------------- include paths for the library --------------------
     lib.addIncludePath(b.path("include"));
     lib.addIncludePath(b.path("src"));
     lib.addIncludePath(b.path("."));
+    includePathToLib(
+        tflm_tree, //root aka prefix
+        lib, // library
+        dir_endings,
+    );
+
+    // -------------------------- recursively collect all .cpp under tflm_tree/tensorflow --------------------------
+    addCSourceFilesToLib(
+        b,
+        lib,
+        tflm_tree, // root
+        &.{
+            "tflm_tree/tensorflow", // recursively collect all .cpp under tflm_tree/tensorflow
+            "tflm_tree/third_party", // recursively collect all .cpp under tflm_tree/thirth_party
+            "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
+        },
+        tflm_flags,
+    );
+    lib.addCSourceFiles(.{
+        .root = root_model,
+        .files = &.{"model.cc"},
+        .flags = tflm_flags,
+    });
+    lib.addCSourceFiles(.{
+        .root = root_model,
+        .files = &.{"tflm_wrapper.cpp"},
+        .flags = tflm_flags,
+    });
 
     // Link C libraries that your code depends on
     lib.linkLibC();
@@ -169,7 +179,7 @@ pub fn build(b: *std.Build) void {
     lib_step.dependOn(&lib.step);
 }
 
-fn collectFromDir(
+inline fn collectFromDir(
     b: *std.Build,
     cwd: *std.fs.Dir,
     prefix: []const u8,
@@ -228,5 +238,65 @@ fn collect(
         } else {
             break; // No more entries
         }
+    }
+}
+
+inline fn includePathToExecutable(
+    comptime prefix: []const u8,
+    exe: *std.Build.Step.Compile,
+    comptime endings: []const []const u8,
+) void {
+    inline for (endings) |ending| {
+        exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = prefix ++ ending });
+    }
+}
+
+inline fn includePathToLib(
+    comptime prefix: []const u8,
+    lib: *std.Build.Step.Compile,
+    comptime endings: []const []const u8,
+) void {
+    inline for (endings) |ending| {
+        lib.addIncludePath(std.Build.LazyPath{ .cwd_relative = prefix ++ ending });
+    }
+}
+
+inline fn addCSourceFilesToExecutable(
+    b: *std.Build,
+    exe: *std.Build.Step.Compile,
+    comptime root: []const u8,
+    comptime dir: []const []const u8,
+    comptime flags: []const []const u8,
+) void {
+    var cwd = std.fs.cwd();
+    inline for (dir) |d| {
+        var cpp_files_list = collectFromDir(b, &cwd, d) catch unreachable;
+        const cpp_files = cpp_files_list.toOwnedSlice() catch unreachable;
+        cpp_files_list.deinit();
+        exe.addCSourceFiles(.{
+            .root = std.Build.LazyPath{ .cwd_relative = root },
+            .files = cpp_files,
+            .flags = flags,
+        });
+    }
+}
+
+fn addCSourceFilesToLib(
+    b: *std.Build,
+    lib: *std.Build.Step.Compile,
+    comptime root: []const u8,
+    comptime dir: []const []const u8,
+    comptime flags: []const []const u8,
+) void {
+    var cwd = std.fs.cwd();
+    inline for (dir) |d| {
+        var cpp_files_list = collectFromDir(b, &cwd, d) catch unreachable;
+        const cpp_files = cpp_files_list.toOwnedSlice() catch unreachable;
+        cpp_files_list.deinit();
+        lib.addCSourceFiles(.{
+            .root = std.Build.LazyPath{ .cwd_relative = root },
+            .files = cpp_files,
+            .flags = flags,
+        });
     }
 }
