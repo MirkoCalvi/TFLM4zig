@@ -12,12 +12,12 @@ pub const Engine = struct {
     /// One-time initializer. Call this once at program startup.
     pub fn init(arena_size: usize) !*Engine {
         // Build a &[u8] view over your model
-        const data = cc_model.tfl__model_tflite[0..3928];
+        const data = cc_model.tfl__model_tflite[0..8220];
 
         std.debug.print("\n+++++++++ TFLMInterpreter initialization\n", .{});
 
         // Use page allocator directly like your working example
-        const allocator = std.heap.page_allocator;
+        const allocator = std.heap.c_allocator;
 
         // Initialize interpreter as a value (not pointer) like your working example
         var interpreter = tflm.TFLMInterpreter.init(allocator, arena_size, data) catch |err| {

@@ -10,12 +10,12 @@ pub fn build(b: *std.Build) void {
     build_options.addOption([]const u8, "model_name", model_name);
 
     const target = b.standardTargetOptions(.{});
-    // const optimize = b.standardOptimizeOption(.{});
+    const optimize = b.standardOptimizeOption(.{});
 
     const exe_mod = b.createModule(.{
         .root_source_file = b.path("src/main.zig"),
         .target = target,
-        .optimize = .ReleaseSmall,
+        .optimize = optimize,
     });
 
     const exe = b.addExecutable(.{
@@ -123,7 +123,7 @@ pub fn build(b: *std.Build) void {
         .name = "tflm_inference",
         .root_source_file = b.path("src/inference_engine.zig"), // Your main source file
         .target = target,
-        .optimize = .ReleaseSmall,
+        .optimize = optimize,
     });
 
     // -------------------- include paths for the library --------------------
