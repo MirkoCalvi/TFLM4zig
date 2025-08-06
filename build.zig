@@ -27,8 +27,7 @@ pub fn build(b: *std.Build) void {
     exe.linkLibCpp();
 
     // -------------------- params --------------------
-    const root_model_path = b.fmt("src/models/{s}", .{model_name});
-    const root_model = b.path(root_model_path);
+    const root_model = b.path("src/model");
 
     const tflm_tree = "/home/mirko/Documents/zig/tflm4zig/tflm_tree";
     const dir_endings = &[_][]const u8{
@@ -72,7 +71,9 @@ pub fn build(b: *std.Build) void {
     };
 
     // -------------------- include paths for the executable --------------------
+    exe.addIncludePath(b.path("include"));
     exe.addIncludePath(b.path("src"));
+    exe.addIncludePath(b.path("."));
     includePathToExecutable(
         tflm_tree, //root aka prefix
         exe, // executable

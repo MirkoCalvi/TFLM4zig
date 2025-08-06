@@ -1,6 +1,6 @@
 const build_options = @import("build_options");
 const cc_model = @cImport({
-    @cInclude("models/dummy/model.h");
+    @cInclude("model/model.h");
 });
 const std = @import("std");
 const tflm = @import("tflm.zig");
@@ -12,7 +12,7 @@ pub const Engine = struct {
     /// One-time initializer. Call this once at program startup.
     pub fn init(arena_size: usize) !*Engine {
         // Build a &[u8] view over your model
-        const data = cc_model.tfl__model_tflite[0..8220];
+        const data = cc_model.tfl__model_tflite[0..cc_model.tfl__model_tflite_len];
 
         std.debug.print("\n+++++++++ TFLMInterpreter initialization\n", .{});
 
