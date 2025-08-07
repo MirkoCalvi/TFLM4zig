@@ -2,7 +2,7 @@ const std = @import("std");
 const infer = @import("inference_engine.zig");
 
 pub fn main() !void {
-    const arena_size = 7 * 1024;
+    const arena_size = @floor(0.3 * 1024 * 1024); // 0.3 MB
     _ = infer.inference_init(arena_size) orelse {
         std.debug.print("OOM initializing\n", .{});
         return;
@@ -27,7 +27,7 @@ pub fn main() !void {
 
     // find best
     var best: usize = 0;
-    for (out_buf[1..out_len], 0..) |val, i| {
+    for (out_buf[0..out_len], 0..) |val, i| {
         if (val > out_buf[best]) best = i + 1;
         std.debug.print("Output[{}] = {}\n", .{ i + 1, val });
     }

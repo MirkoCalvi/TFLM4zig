@@ -1,0 +1,80 @@
+--------------------------------------------------------------------------------
+Command:            ./zig-out/bin/tflm4zig
+Massif arguments:   --time-unit=ms
+ms_print arguments: massif.out.50326
+--------------------------------------------------------------------------------
+
+
+    KB
+8.898^                                                                ::::::# 
+     |                                                        :::::::::     # 
+     |                                                      :::       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     # 
+     |                                                      : :       :     #:
+   0 +----------------------------------------------------------------------->ms
+     0                                                                     516
+
+Number of snapshots: 10
+ Detailed snapshots: [6 (peak)]
+
+--------------------------------------------------------------------------------
+  n       time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  0              0                0                0             0            0
+  1            388            7,176            7,168             8            0
+  2            390            8,208            8,192            16            0
+  3            393            8,648            8,624            24            0
+  4            403            9,040            9,008            32            0
+  5            460            9,112            9,064            48            0
+  6            502            9,112            9,064            48            0
+99.47% (9,064B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->79.28% (7,224B) 0x102FB41: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+| ->78.67% (7,168B) 0x102DB82: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+| | ->78.67% (7,168B) 0x102DF6C: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+| |   ->78.67% (7,168B) 0x4983D8F: (below main) (libc_start_call_main.h:58)
+| |     
+| ->00.61% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->11.24% (1,024B) 0x49D8BA3: _IO_file_doallocate (filedoalloc.c:101)
+| ->11.24% (1,024B) 0x49E7CDF: _IO_doallocbuf (genops.c:347)
+|   ->11.24% (1,024B) 0x49E6F5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:744)
+|     ->11.24% (1,024B) 0x49E56D4: _IO_new_file_xsputn (fileops.c:1243)
+|       ->11.24% (1,024B) 0x49E56D4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
+|         ->11.24% (1,024B) 0x49DAF1B: puts (ioputs.c:40)
+|           ->11.24% (1,024B) 0x102D375: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+|             ->11.24% (1,024B) 0x102DC08: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+|               ->11.24% (1,024B) 0x102DF6C: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+|                 ->11.24% (1,024B) 0x4983D8F: (below main) (libc_start_call_main.h:58)
+|                   
+->08.96% (816B) 0x104A995: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+  ->04.74% (432B) 0x102D37F: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+  | ->04.74% (432B) 0x102DC08: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+  |   ->04.74% (432B) 0x102DF6C: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+  |     ->04.74% (432B) 0x4983D8F: (below main) (libc_start_call_main.h:58)
+  |       
+  ->04.21% (384B) 0x102D5A6: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+    ->04.21% (384B) 0x102DC08: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+      ->04.21% (384B) 0x102DF6C: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/tflm4zig)
+        ->04.21% (384B) 0x4983D8F: (below main) (libc_start_call_main.h:58)
+          
+--------------------------------------------------------------------------------
+  n       time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  7            502            1,936            1,896            40            0
+  8            502            1,864            1,840            24            0
+  9            516              832              816            16            0

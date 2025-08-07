@@ -1,30 +1,48 @@
 {
-  "model_name": "dummy",
-  "model_used": "dummy_float32.tflite",
+  "model_name": "darknet_s",
+  "model_used": "darknet_s_float32.tflite",
   "add_calls": [
+    {
+      "op_name": "ADD",
+      "add_call": "op_resolver->AddAdd();"
+    },
+    {
+      "op_name": "CONCATENATION",
+      "add_call": "op_resolver->AddConcatenation();"
+    },
     {
       "op_name": "CONV_2D",
       "add_call": "op_resolver->AddConv2D();"
     },
     {
-      "op_name": "MAX_POOL_2D",
-      "add_call": "op_resolver->AddMaxPool2D();"
+      "op_name": "FULLY_CONNECTED",
+      "add_call": "op_resolver->AddFullyConnected();"
     },
     {
-      "op_name": "RESHAPE",
-      "add_call": "op_resolver->AddReshape();"
+      "op_name": "LOGISTIC",
+      "add_call": "op_resolver->AddLogistic();"
     },
     {
-      "op_name": "SOFTMAX",
-      "add_call": "op_resolver->AddSoftmax();"
+      "op_name": "MUL",
+      "add_call": "op_resolver->AddMul();"
     },
     {
-      "op_name": "TRANSPOSE",
-      "add_call": "op_resolver->AddTranspose();"
+      "op_name": "PAD",
+      "add_call": "op_resolver->AddPad();"
+    },
+    {
+      "op_name": "STRIDED_SLICE",
+      "add_call": "op_resolver->AddStridedSlice();"
+    },
+    {
+      "op_name": "SUB",
+      "add_call": "op_resolver->AddSub();"
     }
   ],
   "missing_ops": [
     "DELEGATE"
   ],
-  "number_of_ops_used": 6
+  "number_of_ops_used": 10,
+  "cc_len": 17705168,
+  "kTensorArenaSize": "20 * 1024"
 }

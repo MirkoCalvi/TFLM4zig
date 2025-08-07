@@ -1,0 +1,82 @@
+--------------------------------------------------------------------------------
+Command:            ./zig-out/bin/tflm4zig
+Massif arguments:   --time-unit=ms
+ms_print arguments: massif.out.20391
+--------------------------------------------------------------------------------
+
+
+    KB
+1.820^                               ::::::::::::::::::::::::::::::::::::::::#
+     |                               :                                       #
+     |                               :                                       #
+     |                               :                                       #
+     |                               :                                       #
+     |                             :::                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+     |                             : :                                       #
+   0 +----------------------------------------------------------------------->s
+     0                                                                   1.022
+
+Number of snapshots: 6
+ Detailed snapshots: [4 (peak)]
+
+--------------------------------------------------------------------------------
+  n       time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  0              0                0                0             0            0
+  1            418            1,032            1,024             8            0
+  2            423            1,472            1,456            16            0
+  3            443            1,864            1,840            24            0
+  4          1,022            1,864            1,840            24            0
+98.71% (1,840B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->54.94% (1,024B) 0x49D8BA3: _IO_file_doallocate (filedoalloc.c:101)
+| ->54.94% (1,024B) 0x49E7CDF: _IO_doallocbuf (genops.c:347)
+|   ->54.94% (1,024B) 0x49E6F5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:744)
+|     ->54.94% (1,024B) 0x49E56D4: _IO_new_file_xsputn (fileops.c:1243)
+|       ->54.94% (1,024B) 0x49E56D4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
+|         ->54.94% (1,024B) 0x49CF14C: outstring_func (vfprintf-internal.c:239)
+|           ->54.94% (1,024B) 0x49CF14C: __vfprintf_internal (vfprintf-internal.c:1263)
+|             ->54.94% (1,024B) 0x49BA79E: printf (printf.c:33)
+|               ->54.94% (1,024B) 0x14032DD: tflm_create_interpreter_from_model (tflm_wrapper.cpp:67)
+|                 ->54.94% (1,024B) 0x14B3B57: tflm.TFLMInterpreter.init (tflm.zig:52)
+|                   ->54.94% (1,024B) 0x14B44D5: inference_engine.Engine.init (inference_engine.zig:24)
+|                     ->54.94% (1,024B) 0x14B2595: inference_init (inference_engine.zig:69)
+|                       ->54.94% (1,024B) 0x14B2138: main.main (main.zig:6)
+|                         ->54.94% (1,024B) 0x14B3422: callMain (start.zig:656)
+|                           ->54.94% (1,024B) 0x14B3422: callMainWithArgs (start.zig:616)
+|                             ->54.94% (1,024B) 0x14B3422: main (start.zig:631)
+|                               
+->23.18% (432B) 0x14032E7: tflm_create_interpreter_from_model (tflm_wrapper.cpp:68)
+| ->23.18% (432B) 0x14B3B57: tflm.TFLMInterpreter.init (tflm.zig:52)
+|   ->23.18% (432B) 0x14B44D5: inference_engine.Engine.init (inference_engine.zig:24)
+|     ->23.18% (432B) 0x14B2595: inference_init (inference_engine.zig:69)
+|       ->23.18% (432B) 0x14B2138: main.main (main.zig:6)
+|         ->23.18% (432B) 0x14B3422: callMain (start.zig:656)
+|           ->23.18% (432B) 0x14B3422: callMainWithArgs (start.zig:616)
+|             ->23.18% (432B) 0x14B3422: main (start.zig:631)
+|               
+->20.60% (384B) 0x14037D5: tflm_create_interpreter_from_model (tflm_wrapper.cpp:97)
+  ->20.60% (384B) 0x14B3B57: tflm.TFLMInterpreter.init (tflm.zig:52)
+    ->20.60% (384B) 0x14B44D5: inference_engine.Engine.init (inference_engine.zig:24)
+      ->20.60% (384B) 0x14B2595: inference_init (inference_engine.zig:69)
+        ->20.60% (384B) 0x14B2138: main.main (main.zig:6)
+          ->20.60% (384B) 0x14B3422: callMain (start.zig:656)
+            ->20.60% (384B) 0x14B3422: callMainWithArgs (start.zig:616)
+              ->20.60% (384B) 0x14B3422: main (start.zig:631)
+                
+--------------------------------------------------------------------------------
+  n       time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  5          1,022              832              816            16            0

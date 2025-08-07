@@ -1,4 +1,4 @@
-// HEADER FOR dummy 
+// HEADER FOR darknet_s 
 
 #pragma once 
 

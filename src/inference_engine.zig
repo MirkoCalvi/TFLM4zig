@@ -17,7 +17,8 @@ pub const Engine = struct {
         std.debug.print("\n+++++++++ TFLMInterpreter initialization\n", .{});
 
         // Use page allocator directly like your working example
-        const allocator = std.heap.gpa;
+        // var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+        const allocator = std.heap.c_allocator; //std.heap.page_allocator; //std.heap.c_allocator;
 
         // Initialize interpreter as a value (not pointer) like your working example
         var interpreter = tflm.TFLMInterpreter.init(allocator, arena_size, data) catch |err| {

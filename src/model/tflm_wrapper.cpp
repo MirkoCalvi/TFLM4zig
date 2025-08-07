@@ -1,11 +1,12 @@
 
-// WRAPPER FOR dummy 
+// WRAPPER FOR darknet_s 
 
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 #include "tensorflow/lite/micro/system_setup.h"
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
+
 
 // Include signal processing ops
 // #include "signal/micro/kernels/delay_flexbuffers_generated_data.h"
@@ -39,10 +40,9 @@
 
 // Globals to hold interpreter state
 namespace {
-    constexpr int kTensorArenaSize = 20 * 1024;
     const tflite::Model* model = nullptr;
     tflite::MicroInterpreter* interpreter = nullptr;
-    tflite::MicroMutableOpResolver<6>* op_resolver = nullptr;
+    tflite::MicroMutableOpResolver<10>* op_resolver = nullptr;
 }
 
 // Debugging custom op registration with correct type
@@ -65,19 +65,27 @@ extern "C" {
         }
 
         printf("Creating op resolver...\n");
-        op_resolver = new tflite::MicroMutableOpResolver<6>();
+        op_resolver = new tflite::MicroMutableOpResolver<10>();
 
         printf("Registering common NN operators...\n");
+        // ADD
+        op_resolver->AddAdd();
+        // CONCATENATION
+        op_resolver->AddConcatenation();
         // CONV_2D
         op_resolver->AddConv2D();
-        // MAX_POOL_2D
-        op_resolver->AddMaxPool2D();
-        // RESHAPE
-        op_resolver->AddReshape();
-        // SOFTMAX
-        op_resolver->AddSoftmax();
-        // TRANSPOSE
-        op_resolver->AddTranspose();
+        // FULLY_CONNECTED
+        op_resolver->AddFullyConnected();
+        // LOGISTIC
+        op_resolver->AddLogistic();
+        // MUL
+        op_resolver->AddMul();
+        // PAD
+        op_resolver->AddPad();
+        // STRIDED_SLICE
+        op_resolver->AddStridedSlice();
+        // SUB
+        op_resolver->AddSub();
 
         const auto* opcodes = model->operator_codes();
         if (opcodes) {
