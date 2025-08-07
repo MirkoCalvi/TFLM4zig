@@ -1,5 +1,5 @@
 
-// WRAPPER FOR darknet_n 
+// WRAPPER FOR mobilenet_v2 
 
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
@@ -40,9 +40,10 @@
 
 // Globals to hold interpreter state
 namespace {
+    constexpr int kTensorArenaSize =20 * 1024;
     const tflite::Model* model = nullptr;
     tflite::MicroInterpreter* interpreter = nullptr;
-    tflite::MicroMutableOpResolver<10>* op_resolver = nullptr;
+    tflite::MicroMutableOpResolver<8>* op_resolver = nullptr;
 }
 
 // Debugging custom op registration with correct type
@@ -65,25 +66,21 @@ extern "C" {
         }
 
         printf("Creating op resolver...\n");
-        op_resolver = new tflite::MicroMutableOpResolver<10>();
+        op_resolver = new tflite::MicroMutableOpResolver<8>();
 
         printf("Registering common NN operators...\n");
         // ADD
         op_resolver->AddAdd();
-        // CONCATENATION
-        op_resolver->AddConcatenation();
         // CONV_2D
         op_resolver->AddConv2D();
+        // DEPTHWISE_CONV_2D
+        op_resolver->AddDepthwiseConv2D();
         // FULLY_CONNECTED
         op_resolver->AddFullyConnected();
-        // LOGISTIC
-        op_resolver->AddLogistic();
         // MUL
         op_resolver->AddMul();
         // PAD
         op_resolver->AddPad();
-        // STRIDED_SLICE
-        op_resolver->AddStridedSlice();
         // SUB
         op_resolver->AddSub();
 

@@ -1,4 +1,4 @@
-// HEADER FOR darknet_n 
+// HEADER FOR mobilenet_v2 
 
 #pragma once 
 
