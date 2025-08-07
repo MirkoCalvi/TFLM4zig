@@ -1,0 +1,90 @@
+desc: --time-unit=ms
+cmd: ./zig-out/bin/stdc_large
+time_unit: ms
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=412
+mem_heap_B=209715
+mem_heap_extra_B=21
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=414
+mem_heap_B=210739
+mem_heap_extra_B=29
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=417
+mem_heap_B=211371
+mem_heap_extra_B=45
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=426
+mem_heap_B=211755
+mem_heap_extra_B=53
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=488
+mem_heap_B=211811
+mem_heap_extra_B=69
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=1000
+mem_heap_B=211811
+mem_heap_extra_B=69
+mem_stacks_B=0
+heap_tree=peak
+n2: 211811 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 209771 0x10182C3: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/stdc_large)
+  n1: 209715 0x1016326: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/stdc_large)
+   n1: 209715 0x1016710: ??? (in /home/mirko/Documents/zig/tflm4zig/zig-out/bin/stdc_large)
+    n0: 209715 0x4983D8F: (below main) (libc_start_call_main.h:58)
+  n0: 56 in 1 place, below massif's threshold (1.00%)
+ n0: 2040 in 2 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=7
+#-----------
+time=1000
+mem_heap_B=2096
+mem_heap_extra_B=48
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=1000
+mem_heap_B=2040
+mem_heap_extra_B=32
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=1015
+mem_heap_B=1016
+mem_heap_extra_B=24
+mem_stacks_B=0
+heap_tree=empty

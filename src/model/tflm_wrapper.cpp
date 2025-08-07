@@ -1,5 +1,5 @@
 
-// WRAPPER FOR stdc_small 
+// WRAPPER FOR stdc_large 
 
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"

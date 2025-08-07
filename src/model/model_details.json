@@ -1,6 +1,6 @@
 {
-  "model_name": "stdc_small",
-  "model_used": "stdc_small_float32.tflite",
+  "model_name": "stdc_large",
+  "model_used": "stdc_large_float32.tflite",
   "add_calls": [
     {
       "op_name": "AVERAGE_POOL_2D",
@@ -39,6 +39,6 @@
     "DELEGATE"
   ],
   "number_of_ops_used": 9,
-  "cc_len": 21287224,
+  "cc_len": 37407808,
   "kTensorArenaSize": "20 * 1024"
 }

@@ -19,7 +19,7 @@ pub fn build(b: *std.Build) void {
     });
 
     const exe = b.addExecutable(.{
-        .name = "tflm4zig",
+        .name = model_name,
         .root_module = exe_mod,
     });
 
