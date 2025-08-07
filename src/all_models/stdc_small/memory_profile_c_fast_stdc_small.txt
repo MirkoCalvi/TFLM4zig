@@ -1,0 +1,68 @@
+--------------------------------------------------------------------------------
+Command:            ./zig-out/bin/stdc_small
+Massif arguments:   --time-unit=ms
+ms_print arguments: massif.out.116000
+--------------------------------------------------------------------------------
+
+
+    KB
+206.9^                                       :::::::::::::::::::::::::::::::# 
+     |                                 :::::::                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+     |                                 ::    :                              # 
+   0 +----------------------------------------------------------------------->ms
+     0                                                                     990
+
+Number of snapshots: 10
+ Detailed snapshots: [6 (peak)]
+
+--------------------------------------------------------------------------------
+  n       time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  0              0                0                0             0            0
+  1            455          209,736          209,715            21            0
+  2            458          210,768          210,739            29            0
+  3            461          211,416          211,371            45            0
+  4            473          211,808          211,755            53            0
+  5            543          211,880          211,811            69            0
+  6            974          211,880          211,811            69            0
+99.97% (211,811B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->98.98% (209,715B) 0x101A9AE: alignedAlloc (heap.zig:164)
+| ->98.98% (209,715B) 0x101A9AE: alloc (heap.zig:209)
+|   ->98.98% (209,715B) 0x101A9AE: rawAlloc (Allocator.zig:129)
+|     ->98.98% (209,715B) 0x101A9AE: allocBytesWithAlignment__anon_3408 (Allocator.zig:269)
+|       ->98.98% (209,715B) 0x101A9AE: allocWithSizeAndAlignment__anon_3163 (Allocator.zig:260)
+|         ->98.98% (209,715B) 0x101A9AE: allocAdvancedWithRetAddr (Allocator.zig:254)
+|           ->98.98% (209,715B) 0x101A9AE: alloc__anon_2668 (Allocator.zig:178)
+|             ->98.98% (209,715B) 0x101A9AE: init (tflm.zig:48)
+|               ->98.98% (209,715B) 0x101A9AE: init (inference_engine.zig:24)
+|                 ->98.98% (209,715B) 0x101A9AE: inference_init (inference_engine.zig:69)
+|                   ->98.98% (209,715B) 0x101B332: main (main.zig:6)
+|                     ->98.98% (209,715B) 0x101B332: callMain (start.zig:656)
+|                       ->98.98% (209,715B) 0x101B332: callMainWithArgs (start.zig:616)
+|                         ->98.98% (209,715B) 0x101B332: main (start.zig:631)
+|                           
+->00.99% (2,096B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n       time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  7            974            2,144            2,096            48            0
+  8            975            2,072            2,040            32            0
+  9            990            1,040            1,016            24            0

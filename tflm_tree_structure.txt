@@ -1,0 +1,512 @@
+tflm_tree
+├── LICENSE
+├── signal
+│   ├── micro
+│   │   └── kernels
+│   │       ├── delay.cpp
+│   │       ├── delay_flexbuffers_generated_data.h
+│   │       ├── energy.cpp
+│   │       ├── energy_flexbuffers_generated_data.h
+│   │       ├── fft_auto_scale_common.cpp
+│   │       ├── fft_auto_scale_kernel.cpp
+│   │       ├── fft_auto_scale_kernel.h
+│   │       ├── fft_flexbuffers_generated_data.h
+│   │       ├── filter_bank.cpp
+│   │       ├── filter_bank_flexbuffers_generated_data.h
+│   │       ├── filter_bank_log.cpp
+│   │       ├── filter_bank_log_flexbuffers_generated_data.h
+│   │       ├── filter_bank_spectral_subtraction.cpp
+│   │       ├── filter_bank_spectral_subtraction_flexbuffers_generated_data.h
+│   │       ├── filter_bank_square_root_common.cpp
+│   │       ├── filter_bank_square_root.cpp
+│   │       ├── filter_bank_square_root.h
+│   │       ├── framer.cpp
+│   │       ├── framer_flexbuffers_generated_data.h
+│   │       ├── irfft.cpp
+│   │       ├── irfft.h
+│   │       ├── overlap_add.cpp
+│   │       ├── overlap_add_flexbuffers_generated_data.h
+│   │       ├── pcan.cpp
+│   │       ├── pcan_flexbuffers_generated_data.h
+│   │       ├── rfft.cpp
+│   │       ├── rfft.h
+│   │       ├── stacker.cpp
+│   │       ├── stacker_flexbuffers_generated_data.h
+│   │       ├── window.cpp
+│   │       └── window_flexbuffers_generated_data.h
+│   └── src
+│       ├── circular_buffer.cpp
+│       ├── circular_buffer.h
+│       ├── complex.h
+│       ├── energy.cpp
+│       ├── energy.h
+│       ├── fft_auto_scale.cpp
+│       ├── fft_auto_scale.h
+│       ├── filter_bank.cpp
+│       ├── filter_bank.h
+│       ├── filter_bank_log.cpp
+│       ├── filter_bank_log.h
+│       ├── filter_bank_spectral_subtraction.cpp
+│       ├── filter_bank_spectral_subtraction.h
+│       ├── filter_bank_square_root.cpp
+│       ├── filter_bank_square_root.h
+│       ├── irfft_float.cpp
+│       ├── irfft.h
+│       ├── irfft_int16.cpp
+│       ├── irfft_int32.cpp
+│       ├── kiss_fft_wrappers
+│       │   ├── kiss_fft_common.h
+│       │   ├── kiss_fft_float.cpp
+│       │   ├── kiss_fft_float.h
+│       │   ├── kiss_fft_int16.cpp
+│       │   ├── kiss_fft_int16.h
+│       │   ├── kiss_fft_int32.cpp
+│       │   └── kiss_fft_int32.h
+│       ├── log.cpp
+│       ├── log.h
+│       ├── max_abs.cpp
+│       ├── max_abs.h
+│       ├── msb_32.cpp
+│       ├── msb_64.cpp
+│       ├── msb.h
+│       ├── overlap_add.cpp
+│       ├── overlap_add.h
+│       ├── pcan_argc_fixed.cpp
+│       ├── pcan_argc_fixed.h
+│       ├── rfft_float.cpp
+│       ├── rfft.h
+│       ├── rfft_int16.cpp
+│       ├── rfft_int32.cpp
+│       ├── square_root_32.cpp
+│       ├── square_root_64.cpp
+│       ├── square_root.h
+│       ├── window.cpp
+│       └── window.h
+├── tensorflow
+│   ├── compiler
+│   │   └── mlir
+│   │       └── lite
+│   │           ├── core
+│   │           │   ├── api
+│   │           │   │   ├── error_reporter.cpp
+│   │           │   │   └── error_reporter.h
+│   │           │   └── c
+│   │           │       ├── builtin_op_data.h
+│   │           │       └── tflite_types.h
+│   │           ├── kernels
+│   │           │   └── internal
+│   │           │       └── compatibility_macros.h
+│   │           └── schema
+│   │               ├── schema_generated.h
+│   │               ├── schema_utils.cpp
+│   │               └── schema_utils.h
+│   └── lite
+│       ├── builtin_op_data.h
+│       ├── builtin_ops.h
+│       ├── c
+│       │   ├── builtin_op_data.h
+│       │   ├── c_api_types.h
+│       │   └── common.h
+│       ├── context_util.h
+│       ├── core
+│       │   ├── api
+│       │   │   ├── error_reporter.h
+│       │   │   ├── flatbuffer_conversions.cpp
+│       │   │   ├── flatbuffer_conversions.h
+│       │   │   ├── tensor_utils.cpp
+│       │   │   └── tensor_utils.h
+│       │   ├── c
+│       │   │   ├── builtin_op_data.h
+│       │   │   ├── c_api_types.h
+│       │   │   ├── common.cpp
+│       │   │   └── common.h
+│       │   └── macros.h
+│       ├── kernels
+│       │   ├── internal
+│       │   │   ├── common.cpp
+│       │   │   ├── common.h
+│       │   │   ├── compatibility.h
+│       │   │   ├── cppmath.h
+│       │   │   ├── max.h
+│       │   │   ├── min.h
+│       │   │   ├── optimized
+│       │   │   │   └── neon_check.h
+│       │   │   ├── portable_tensor.h
+│       │   │   ├── portable_tensor_utils.cpp
+│       │   │   ├── portable_tensor_utils.h
+│       │   │   ├── quantization_util.cpp
+│       │   │   ├── quantization_util.h
+│       │   │   ├── reference
+│       │   │   │   ├── add.h
+│       │   │   │   ├── add_n.h
+│       │   │   │   ├── arg_min_max.h
+│       │   │   │   ├── batch_matmul.h
+│       │   │   │   ├── batch_to_space_nd.h
+│       │   │   │   ├── binary_function.h
+│       │   │   │   ├── broadcast_args.h
+│       │   │   │   ├── broadcast_to.h
+│       │   │   │   ├── ceil.h
+│       │   │   │   ├── comparisons.cpp
+│       │   │   │   ├── comparisons.h
+│       │   │   │   ├── concatenation.h
+│       │   │   │   ├── conv.h
+│       │   │   │   ├── cumsum.h
+│       │   │   │   ├── depth_to_space.h
+│       │   │   │   ├── depthwiseconv_float.h
+│       │   │   │   ├── depthwiseconv_uint8.h
+│       │   │   │   ├── dequantize.h
+│       │   │   │   ├── div.h
+│       │   │   │   ├── elu.h
+│       │   │   │   ├── exp.h
+│       │   │   │   ├── fill.h
+│       │   │   │   ├── floor_div.h
+│       │   │   │   ├── floor.h
+│       │   │   │   ├── floor_mod.h
+│       │   │   │   ├── fully_connected.h
+│       │   │   │   ├── hard_swish.h
+│       │   │   │   ├── integer_ops
+│       │   │   │   │   ├── add.h
+│       │   │   │   │   ├── conv.h
+│       │   │   │   │   ├── depthwise_conv.h
+│       │   │   │   │   ├── fully_connected.h
+│       │   │   │   │   ├── l2normalization.h
+│       │   │   │   │   ├── logistic.h
+│       │   │   │   │   ├── mean.h
+│       │   │   │   │   ├── mul.h
+│       │   │   │   │   ├── pooling.h
+│       │   │   │   │   ├── tanh.h
+│       │   │   │   │   └── transpose_conv.h
+│       │   │   │   ├── l2normalization.h
+│       │   │   │   ├── leaky_relu.h
+│       │   │   │   ├── logistic.h
+│       │   │   │   ├── log_softmax.h
+│       │   │   │   ├── lstm_cell.h
+│       │   │   │   ├── maximum_minimum.h
+│       │   │   │   ├── mul.h
+│       │   │   │   ├── neg.h
+│       │   │   │   ├── pad.h
+│       │   │   │   ├── pooling.h
+│       │   │   │   ├── portable_tensor_utils.cpp
+│       │   │   │   ├── portable_tensor_utils.h
+│       │   │   │   ├── portable_tensor_utils_impl.h
+│       │   │   │   ├── prelu.h
+│       │   │   │   ├── process_broadcast_shapes.h
+│       │   │   │   ├── quantize.h
+│       │   │   │   ├── reduce.h
+│       │   │   │   ├── requantize.h
+│       │   │   │   ├── resize_bilinear.h
+│       │   │   │   ├── resize_nearest_neighbor.h
+│       │   │   │   ├── reverse.h
+│       │   │   │   ├── round.h
+│       │   │   │   ├── select.h
+│       │   │   │   ├── slice.h
+│       │   │   │   ├── softmax.h
+│       │   │   │   ├── space_to_batch_nd.h
+│       │   │   │   ├── space_to_depth.h
+│       │   │   │   ├── strided_slice.h
+│       │   │   │   ├── sub.h
+│       │   │   │   ├── tanh.h
+│       │   │   │   ├── transpose_conv.h
+│       │   │   │   └── transpose.h
+│       │   │   ├── runtime_shape.cpp
+│       │   │   ├── runtime_shape.h
+│       │   │   ├── strided_slice_logic.h
+│       │   │   ├── tensor_ctypes.cpp
+│       │   │   ├── tensor_ctypes.h
+│       │   │   ├── tensor_utils.cpp
+│       │   │   └── types.h
+│       │   ├── kernel_util.cpp
+│       │   ├── kernel_util.h
+│       │   ├── op_macros.h
+│       │   └── padding.h
+│       ├── micro
+│       │   ├── arena_allocator
+│       │   │   ├── ibuffer_allocator.h
+│       │   │   ├── non_persistent_arena_buffer_allocator.cpp
+│       │   │   ├── non_persistent_arena_buffer_allocator.h
+│       │   │   ├── persistent_arena_buffer_allocator.cpp
+│       │   │   ├── persistent_arena_buffer_allocator.h
+│       │   │   ├── recording_single_arena_buffer_allocator.cpp
+│       │   │   ├── recording_single_arena_buffer_allocator.h
+│       │   │   ├── single_arena_buffer_allocator.cpp
+│       │   │   └── single_arena_buffer_allocator.h
+│       │   ├── compatibility.h
+│       │   ├── compression.h
+│       │   ├── debug_log.cpp
+│       │   ├── debug_log.h
+│       │   ├── fake_micro_context.cpp
+│       │   ├── fake_micro_context.h
+│       │   ├── flatbuffer_utils.cpp
+│       │   ├── flatbuffer_utils.h
+│       │   ├── hexdump.cpp
+│       │   ├── hexdump.h
+│       │   ├── kernels
+│       │   │   ├── activations_common.cpp
+│       │   │   ├── activations.cpp
+│       │   │   ├── activations.h
+│       │   │   ├── activation_utils.h
+│       │   │   ├── add_common.cpp
+│       │   │   ├── add.cpp
+│       │   │   ├── add.h
+│       │   │   ├── add_n.cpp
+│       │   │   ├── arg_min_max.cpp
+│       │   │   ├── assign_variable.cpp
+│       │   │   ├── batch_matmul_common.cpp
+│       │   │   ├── batch_matmul.cpp
+│       │   │   ├── batch_matmul.h
+│       │   │   ├── batch_to_space_nd.cpp
+│       │   │   ├── broadcast_args.cpp
+│       │   │   ├── broadcast_to.cpp
+│       │   │   ├── call_once.cpp
+│       │   │   ├── cast.cpp
+│       │   │   ├── ceil.cpp
+│       │   │   ├── circular_buffer_common.cpp
+│       │   │   ├── circular_buffer.cpp
+│       │   │   ├── circular_buffer_flexbuffers_generated_data.h
+│       │   │   ├── circular_buffer.h
+│       │   │   ├── comparisons.cpp
+│       │   │   ├── concatenation.cpp
+│       │   │   ├── conv_common.cpp
+│       │   │   ├── conv.cpp
+│       │   │   ├── conv.h
+│       │   │   ├── conv_test.h
+│       │   │   ├── cumsum.cpp
+│       │   │   ├── decompress_common.cpp
+│       │   │   ├── decompress.cpp
+│       │   │   ├── decompress.h
+│       │   │   ├── depth_to_space.cpp
+│       │   │   ├── depthwise_conv_common.cpp
+│       │   │   ├── depthwise_conv.cpp
+│       │   │   ├── depthwise_conv.h
+│       │   │   ├── dequantize_common.cpp
+│       │   │   ├── dequantize.cpp
+│       │   │   ├── dequantize.h
+│       │   │   ├── detection_postprocess.cpp
+│       │   │   ├── detection_postprocess_flexbuffers_generated_data.h
+│       │   │   ├── div.cpp
+│       │   │   ├── elementwise.cpp
+│       │   │   ├── elu.cpp
+│       │   │   ├── embedding_lookup.cpp
+│       │   │   ├── ethosu.cpp
+│       │   │   ├── ethosu.h
+│       │   │   ├── expand_dims.cpp
+│       │   │   ├── exp.cpp
+│       │   │   ├── fill.cpp
+│       │   │   ├── floor.cpp
+│       │   │   ├── floor_div.cpp
+│       │   │   ├── floor_mod.cpp
+│       │   │   ├── fully_connected_common.cpp
+│       │   │   ├── fully_connected.cpp
+│       │   │   ├── fully_connected.h
+│       │   │   ├── gather.cpp
+│       │   │   ├── gather_nd.cpp
+│       │   │   ├── hard_swish_common.cpp
+│       │   │   ├── hard_swish.cpp
+│       │   │   ├── hard_swish.h
+│       │   │   ├── if.cpp
+│       │   │   ├── kernel_runner.cpp
+│       │   │   ├── kernel_runner.h
+│       │   │   ├── kernel_util.cpp
+│       │   │   ├── kernel_util.h
+│       │   │   ├── l2norm.cpp
+│       │   │   ├── l2_pool_2d.cpp
+│       │   │   ├── leaky_relu_common.cpp
+│       │   │   ├── leaky_relu.cpp
+│       │   │   ├── leaky_relu.h
+│       │   │   ├── logical_common.cpp
+│       │   │   ├── logical.cpp
+│       │   │   ├── logical.h
+│       │   │   ├── logistic_common.cpp
+│       │   │   ├── logistic.cpp
+│       │   │   ├── logistic.h
+│       │   │   ├── log_softmax.cpp
+│       │   │   ├── lstm_eval_common.cpp
+│       │   │   ├── lstm_eval.cpp
+│       │   │   ├── lstm_eval.h
+│       │   │   ├── lstm_eval_test.h
+│       │   │   ├── lstm_shared.h
+│       │   │   ├── maximum_minimum.cpp
+│       │   │   ├── maximum_minimum.h
+│       │   │   ├── micro_ops.h
+│       │   │   ├── micro_tensor_utils.cpp
+│       │   │   ├── micro_tensor_utils.h
+│       │   │   ├── mirror_pad.cpp
+│       │   │   ├── mul_common.cpp
+│       │   │   ├── mul.cpp
+│       │   │   ├── mul.h
+│       │   │   ├── neg.cpp
+│       │   │   ├── pack.cpp
+│       │   │   ├── pad_common.cpp
+│       │   │   ├── pad.cpp
+│       │   │   ├── pad.h
+│       │   │   ├── pooling_common.cpp
+│       │   │   ├── pooling.cpp
+│       │   │   ├── pooling.h
+│       │   │   ├── prelu_common.cpp
+│       │   │   ├── prelu.cpp
+│       │   │   ├── prelu.h
+│       │   │   ├── quantize_common.cpp
+│       │   │   ├── quantize.cpp
+│       │   │   ├── quantize.h
+│       │   │   ├── read_variable.cpp
+│       │   │   ├── reduce_common.cpp
+│       │   │   ├── reduce.cpp
+│       │   │   ├── reduce.h
+│       │   │   ├── reshape_common.cpp
+│       │   │   ├── reshape.cpp
+│       │   │   ├── reshape.h
+│       │   │   ├── resize_bilinear.cpp
+│       │   │   ├── resize_nearest_neighbor.cpp
+│       │   │   ├── reverse.cpp
+│       │   │   ├── round.cpp
+│       │   │   ├── select.cpp
+│       │   │   ├── shape.cpp
+│       │   │   ├── slice.cpp
+│       │   │   ├── softmax_common.cpp
+│       │   │   ├── softmax.cpp
+│       │   │   ├── softmax.h
+│       │   │   ├── space_to_batch_nd.cpp
+│       │   │   ├── space_to_depth.cpp
+│       │   │   ├── split.cpp
+│       │   │   ├── split_v.cpp
+│       │   │   ├── squared_difference.cpp
+│       │   │   ├── squeeze.cpp
+│       │   │   ├── strided_slice_common.cpp
+│       │   │   ├── strided_slice.cpp
+│       │   │   ├── strided_slice.h
+│       │   │   ├── sub_common.cpp
+│       │   │   ├── sub.cpp
+│       │   │   ├── sub.h
+│       │   │   ├── svdf_common.cpp
+│       │   │   ├── svdf.cpp
+│       │   │   ├── svdf.h
+│       │   │   ├── tanh.cpp
+│       │   │   ├── transpose_common.cpp
+│       │   │   ├── transpose_conv.cpp
+│       │   │   ├── transpose_conv.h
+│       │   │   ├── transpose.cpp
+│       │   │   ├── transpose.h
+│       │   │   ├── unidirectional_sequence_lstm.cpp
+│       │   │   ├── unidirectional_sequence_lstm.h
+│       │   │   ├── unpack.cpp
+│       │   │   ├── var_handle.cpp
+│       │   │   ├── while.cpp
+│       │   │   └── zeros_like.cpp
+│       │   ├── memory_helpers.cpp
+│       │   ├── memory_helpers.h
+│       │   ├── memory_planner
+│       │   │   ├── greedy_memory_planner.cpp
+│       │   │   ├── greedy_memory_planner.h
+│       │   │   ├── linear_memory_planner.cpp
+│       │   │   ├── linear_memory_planner.h
+│       │   │   ├── memory_plan_struct.h
+│       │   │   ├── micro_memory_planner.h
+│       │   │   ├── non_persistent_buffer_planner_shim.cpp
+│       │   │   └── non_persistent_buffer_planner_shim.h
+│       │   ├── micro_allocation_info.cpp
+│       │   ├── micro_allocation_info.h
+│       │   ├── micro_allocator.cpp
+│       │   ├── micro_allocator.h
+│       │   ├── micro_arena_constants.h
+│       │   ├── micro_common.h
+│       │   ├── micro_context.cpp
+│       │   ├── micro_context.h
+│       │   ├── micro_graph.h
+│       │   ├── micro_interpreter_context.cpp
+│       │   ├── micro_interpreter_context.h
+│       │   ├── micro_interpreter.cpp
+│       │   ├── micro_interpreter_graph.cpp
+│       │   ├── micro_interpreter_graph.h
+│       │   ├── micro_interpreter.h
+│       │   ├── micro_log.cpp
+│       │   ├── micro_log.h
+│       │   ├── micro_mutable_op_resolver.h
+│       │   ├── micro_op_resolver.cpp
+│       │   ├── micro_op_resolver.h
+│       │   ├── micro_profiler.cpp
+│       │   ├── micro_profiler.h
+│       │   ├── micro_profiler_interface.h
+│       │   ├── micro_resource_variable.cpp
+│       │   ├── micro_resource_variable.h
+│       │   ├── micro_time.cpp
+│       │   ├── micro_time.h
+│       │   ├── micro_utils.cpp
+│       │   ├── micro_utils.h
+│       │   ├── mock_micro_graph.cpp
+│       │   ├── mock_micro_graph.h
+│       │   ├── recording_micro_allocator.cpp
+│       │   ├── recording_micro_allocator.h
+│       │   ├── recording_micro_interpreter.h
+│       │   ├── span.h
+│       │   ├── static_vector.h
+│       │   ├── system_setup.cpp
+│       │   ├── system_setup.h
+│       │   ├── test_helper_custom_ops.cpp
+│       │   ├── test_helper_custom_ops.h
+│       │   ├── test_helpers.cpp
+│       │   ├── test_helpers.h
+│       │   └── tflite_bridge
+│       │       ├── flatbuffer_conversions_bridge.cpp
+│       │       ├── flatbuffer_conversions_bridge.h
+│       │       ├── micro_error_reporter.cpp
+│       │       └── micro_error_reporter.h
+│       ├── portable_type_to_tflitetype.h
+│       └── schema
+│           ├── schema_generated.h
+│           └── schema_utils.h
+└── third_party
+    ├── flatbuffers
+    │   ├── include
+    │   │   └── flatbuffers
+    │   │       ├── allocator.h
+    │   │       ├── array.h
+    │   │       ├── base.h
+    │   │       ├── buffer.h
+    │   │       ├── buffer_ref.h
+    │   │       ├── code_generator.h
+    │   │       ├── code_generators.h
+    │   │       ├── default_allocator.h
+    │   │       ├── detached_buffer.h
+    │   │       ├── file_manager.h
+    │   │       ├── flatbuffer_builder.h
+    │   │       ├── flatbuffers.h
+    │   │       ├── flexbuffers.h
+    │   │       ├── flex_flat_util.h
+    │   │       ├── grpc.h
+    │   │       ├── hash.h
+    │   │       ├── idl.h
+    │   │       ├── minireflect.h
+    │   │       ├── reflection_generated.h
+    │   │       ├── reflection.h
+    │   │       ├── registry.h
+    │   │       ├── stl_emulation.h
+    │   │       ├── string.h
+    │   │       ├── struct.h
+    │   │       ├── table.h
+    │   │       ├── util.h
+    │   │       ├── vector_downward.h
+    │   │       ├── vector.h
+    │   │       └── verifier.h
+    │   └── LICENSE
+    ├── gemmlowp
+    │   ├── fixedpoint
+    │   │   ├── fixedpoint.h
+    │   │   ├── fixedpoint_neon.h
+    │   │   └── fixedpoint_sse.h
+    │   ├── internal
+    │   │   └── detect_platform.h
+    │   └── LICENSE
+    ├── kissfft
+    │   ├── COPYING
+    │   ├── kiss_fft.c
+    │   ├── _kiss_fft_guts.h
+    │   ├── kiss_fft.h
+    │   └── tools
+    │       ├── kiss_fftr.c
+    │       └── kiss_fftr.h
+    └── ruy
+        └── ruy
+            └── profiler
+                └── instrumentation.h
+
+43 directories, 466 files

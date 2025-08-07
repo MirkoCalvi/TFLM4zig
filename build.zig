@@ -47,27 +47,32 @@ pub fn build(b: *std.Build) void {
         "/third_party/kissfft",
         "/third_party/kissfft/tools",
         // -- Add all necessary include paths for signal --
-        "/signal",
-        "/signal/micro/kernels",
+        // "/signal",
+        // "/signal/micro/kernels",
     };
     const tflm_flags = &[_][]const u8{
-        "-std=c++17",
-        "-DTF_LITE_STATIC_MEMORY",
-        "-DTF_LITE_DISABLE_X86_NEON",
-        "-DTF_LITE_MCU",
-        "-DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK",
-        // "-Wno-unused-parameter",
-        // "-Wno-missing-field-initializers",
-        // "-Wno-sign-compare",
-        // "-Wno-unused-function",
-        // "-Wno-unused-variable",
-        // "-fno-exceptions",
-        // "-fno-rtti",
-        // "-fno-threadsafe-statics",
-        // "-fmessage-length=0",
-        // "-fno-delete-null-pointer-checks",
-        // "-fomit-frame-pointer",
-        // "-Os",
+        "-std=c++17", //____________________________ Use the C++17 language standard (required by TFLM)
+        "-DTF_LITE_STATIC_MEMORY", //________________Allocate all tensors and work buffers in one static arena
+        "-DTF_LITE_DISABLE_X86_NEON", //_____________Disable x86 NEON optimizations (not available on MCUs)
+        "-DTF_LITE_MCU", //__________________________Enable MCU‐specific kernel implementations and memory management
+        "-DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK", //__Permit GEMMLOWP to use scalar (non‐SIMD) kernels when needed
+        "-Wno-unused-parameter", //__________________Suppress warnings for unused function parameters
+        "-Wno-missing-field-initializers", //________Suppress warnings for partially initialized structs
+        "-Wno-sign-compare", //______________________Suppress warnings when comparing signed vs unsigned values
+        "-Wno-unused-function", //___________________Suppress warnings for static/inline functions that aren’t called
+        "-Wno-unused-variable", //___________________Suppress warnings for variables that are declared but never used
+        "-fno-exceptions", //________________________Disable C++ exception support (reduces code size)
+        "-fno-rtti", //______________________________Disable runtime type information (no typeid/dynamic_cast)
+        "-fno-threadsafe-statics", //________________Don’t emit thread-safety guards for function-local statics
+        "-fmessage-length=0", //_____________________Don’t wrap diagnostic messages (purely cosmetic)
+        "-fno-delete-null-pointer-checks", //________Let optimizer assume null‐pointer dereference is UB
+        "-fomit-frame-pointer", //___________________Don’t keep a frame pointer register (saves bytes and a register)
+        "-Os", //____________________________________Optimize for smallest code size
+        "-ffunction-sections", //____________________Place each function in its own section for linker GC
+        "-fdata-sections", //________________________Place each data object in its own section for linker GC
+        "-flto", //__________________________________Enable link-time optimization across all translation units
+        "-fmerge-all-constants", //__________________Merge identical constants into a single section
+        "-fno-common", //____________________________Treat globals as individual symbols to aid dead-code stripping
     };
 
     // -------------------- include paths for the executable --------------------
@@ -88,7 +93,7 @@ pub fn build(b: *std.Build) void {
         &.{
             "tflm_tree/tensorflow", // recursively collect all .cpp under tflm_tree/tensorflow
             "tflm_tree/third_party", // recursively collect all .cpp under tflm_tree/thirth_party
-            "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
+            // "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
         },
         tflm_flags,
     );
@@ -145,7 +150,7 @@ pub fn build(b: *std.Build) void {
         &.{
             "tflm_tree/tensorflow", // recursively collect all .cpp under tflm_tree/tensorflow
             "tflm_tree/third_party", // recursively collect all .cpp under tflm_tree/thirth_party
-            "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
+            // "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
         },
         tflm_flags,
     );

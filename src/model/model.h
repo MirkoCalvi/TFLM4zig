@@ -1,4 +1,4 @@
-// HEADER FOR mobilenet_v2 
+// HEADER FOR stdc_small 
 
 #pragma once 
 

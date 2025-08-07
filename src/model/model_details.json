@@ -1,10 +1,14 @@
 {
-  "model_name": "mobilenet_v2",
-  "model_used": "mobilenet_v2_float32.tflite",
+  "model_name": "stdc_small",
+  "model_used": "stdc_small_float32.tflite",
   "add_calls": [
     {
-      "op_name": "ADD",
-      "add_call": "op_resolver->AddAdd();"
+      "op_name": "AVERAGE_POOL_2D",
+      "add_call": "op_resolver->AddAveragePool2D();"
+    },
+    {
+      "op_name": "CONCATENATION",
+      "add_call": "op_resolver->AddConcatenation();"
     },
     {
       "op_name": "CONV_2D",
@@ -34,7 +38,7 @@
   "missing_ops": [
     "DELEGATE"
   ],
-  "number_of_ops_used": 8,
-  "cc_len": 7214928,
+  "number_of_ops_used": 9,
+  "cc_len": 21287224,
   "kTensorArenaSize": "20 * 1024"
 }
