@@ -1,6 +1,6 @@
 {
-  "model_name": "darknet_s",
-  "model_used": "darknet_s_float32.tflite",
+  "model_name": "darknet_n",
+  "model_used": "darknet_n_float32.tflite",
   "add_calls": [
     {
       "op_name": "ADD",
@@ -43,6 +43,6 @@
     "DELEGATE"
   ],
   "number_of_ops_used": 10,
-  "cc_len": 17705168,
+  "cc_len": 4450796,
   "kTensorArenaSize": "20 * 1024"
 }

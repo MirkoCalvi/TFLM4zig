@@ -1,4 +1,4 @@
-// HEADER FOR darknet_s 
+// HEADER FOR darknet_n 
 
 #pragma once 
 

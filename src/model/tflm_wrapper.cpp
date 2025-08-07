@@ -1,5 +1,5 @@
 
-// WRAPPER FOR darknet_s 
+// WRAPPER FOR darknet_n 
 
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"

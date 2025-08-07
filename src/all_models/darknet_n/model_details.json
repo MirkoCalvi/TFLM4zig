@@ -1,0 +1,48 @@
+{
+  "model_name": "darknet_n",
+  "model_used": "darknet_n_float32.tflite",
+  "add_calls": [
+    {
+      "op_name": "ADD",
+      "add_call": "op_resolver->AddAdd();"
+    },
+    {
+      "op_name": "CONCATENATION",
+      "add_call": "op_resolver->AddConcatenation();"
+    },
+    {
+      "op_name": "CONV_2D",
+      "add_call": "op_resolver->AddConv2D();"
+    },
+    {
+      "op_name": "FULLY_CONNECTED",
+      "add_call": "op_resolver->AddFullyConnected();"
+    },
+    {
+      "op_name": "LOGISTIC",
+      "add_call": "op_resolver->AddLogistic();"
+    },
+    {
+      "op_name": "MUL",
+      "add_call": "op_resolver->AddMul();"
+    },
+    {
+      "op_name": "PAD",
+      "add_call": "op_resolver->AddPad();"
+    },
+    {
+      "op_name": "STRIDED_SLICE",
+      "add_call": "op_resolver->AddStridedSlice();"
+    },
+    {
+      "op_name": "SUB",
+      "add_call": "op_resolver->AddSub();"
+    }
+  ],
+  "missing_ops": [
+    "DELEGATE"
+  ],
+  "number_of_ops_used": 10,
+  "cc_len": 4450796,
+  "kTensorArenaSize": "20 * 1024"
+}
