@@ -45,12 +45,47 @@ pub const tflm_cpp_flags = &[_][]const u8{
     "-flto", //__________________________________Enable link-time optimization across all translation units
     "-fmerge-all-constants", //__________________Merge identical constants into a single section
     "-fno-common", //____________________________Treat globals as individual symbols to aid dead-code stripping
-    "-nostdlib++", //____________*_______________Don't use standard C++ library
-    "-ffreestanding", //__________*______________Indicate freestanding environment
-    "-fno-use-cxa-atexit", //_______*____________Disable C++ destructor registration
+    // "-nostdlib++", //____________*_______________Don't use standard C++ library
+    // "-ffreestanding", //__________*______________Indicate freestanding environment
+    // "-fno-use-cxa-atexit", //_______*____________Disable C++ destructor registration
     "-Wl,--gc-sections",
     "-Wl,--strip-unneeded",
     "-Wl,--no-whole-program",
+};
+
+pub const MCU_tflm_cpp_flags = &[_][]const u8{
+    "-std=c++17",
+    "-DTF_LITE_STATIC_MEMORY",
+    "-DTF_LITE_DISABLE_X86_NEON",
+    "-DTF_LITE_MCU",
+    "-DNDEBUG",
+    "-DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK",
+    "-Wno-unused-parameter",
+    "-Wno-missing-field-initializers",
+    "-Wno-sign-compare",
+    "-Wno-unused-function",
+    "-Wno-unused-variable",
+    "-fno-exceptions",
+    "-fno-rtti",
+    "-fno-threadsafe-statics",
+    "-fmessage-length=0",
+    "-fno-delete-null-pointer-checks",
+    "-fomit-frame-pointer",
+    "-Os",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-flto",
+    "-fmerge-all-constants",
+    "-fno-common",
+    "-nostdlib++", // Don't use C++ standard library
+    "-nostdinc++", // Don't include C++ standard headers
+    "-ffreestanding", // Freestanding environment
+    "-fno-use-cxa-atexit", // No C++ destructor registration
+    // Your custom headers directory
+    "-I./include",
+    "-Os",
+    "-ffunction-sections",
+    "-fdata-sections",
 };
 
 pub const tflm_c_flags = &[_][]const u8{
@@ -78,12 +113,42 @@ pub const tflm_c_flags = &[_][]const u8{
     "-flto", //__________________________________Enable link-time optimization across all translation units
     "-fmerge-all-constants", //__________________Merge identical constants into a single section
     "-fno-common", //____________________________Treat globals as individual symbols to aid dead-code stripping
-    "-nostdlib++", //____________*_______________Don't use standard C++ library
-    "-ffreestanding", //__________*______________Indicate freestanding environment
-    "-fno-use-cxa-atexit", //_______*____________Disable C++ destructor registration
+    // "-nostdlib++", //____________*_______________Don't use standard C++ library
+    // "-ffreestanding", //__________*______________Indicate freestanding environment
+    // "-fno-use-cxa-atexit", //_______*____________Disable C++ destructor registration
     "-Wl,--gc-sections",
     "-Wl,--strip-unneeded",
     "-Wl,--no-whole-program",
+};
+
+// Fixed C flags (removed C++ specific flags)
+pub const MCU_tflm_c_flags = &[_][]const u8{
+    "-std=c99",
+    "-DTF_LITE_STATIC_MEMORY",
+    "-DTF_LITE_DISABLE_X86_NEON",
+    "-DTF_LITE_MCU",
+    "-DNDEBUG",
+    "-DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK",
+    "-Wno-unused-parameter",
+    "-Wno-missing-field-initializers",
+    "-Wno-sign-compare",
+    "-Wno-unused-function",
+    "-Wno-unused-variable",
+    "-fmessage-length=0",
+    "-fno-delete-null-pointer-checks",
+    "-fomit-frame-pointer",
+    "-Os",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-flto",
+    "-fmerge-all-constants",
+    "-fno-common",
+    "-ffreestanding", // Freestanding environment
+    // Your custom headers directory
+    "-I./include",
+    "-Os",
+    "-ffunction-sections",
+    "-fdata-sections",
 };
 
 pub const micro_cpp_paths = &[_][]const u8{
@@ -181,4 +246,11 @@ pub const micro_cpp_paths = &[_][]const u8{
     // --- SUB ---
     "tensorflow/lite/micro/kernels/sub_common.cpp",
     "tensorflow/lite/micro/kernels/sub.cpp",
+};
+
+// Separate linker flags to be used during linking phase
+pub const tflm_link_flags = &[_][]const u8{
+    "-Wl,--gc-sections",
+    "-Wl,--strip-unneeded",
+    "-Wl,--no-whole-program",
 };

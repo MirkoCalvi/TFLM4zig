@@ -1,282 +1,54 @@
 const std = @import("std");
 const defs = @import("build_defs.zig");
+const exe_builder = @import("build_exe.zig");
+const lib_builder = @import("build_lib.zig");
+
+pub const Build_options = struct {
+    model_name: []const u8,
+    build_exe: bool,
+    build_lib: bool,
+    root_model: []const u8,
+    root_engine: []const u8,
+    target: std.Build.ResolvedTarget,
+    optimize: std.builtin.OptimizeMode,
+
+    pub fn init() Build_options {
+        return Build_options{
+            .model_name = undefined,
+            .build_exe = false,
+            .build_lib = false,
+            .root_model = "src/model",
+            .root_engine = "tflm_tree",
+            .target = undefined,
+            .optimize = undefined,
+        };
+    }
+};
 
 pub fn build(b: *std.Build) void {
+    var build_options = Build_options.init();
+
+    build_options.target = b.standardTargetOptions(.{});
+    build_options.optimize = b.standardOptimizeOption(.{});
     // Define build options
-    const build_options = b.addOptions();
-    const model_name = b.option([]const u8, "model_name", "Name of the model") orelse {
+    build_options.model_name = b.option([]const u8, "model_name", "Name of the model") orelse {
         std.debug.print("❌ Error: -Dmodel_name=\" your_model_name\" is required\n", .{});
         return;
     };
-    build_options.addOption([]const u8, "model_name", model_name);
 
-    const target = b.standardTargetOptions(.{});
-    const optimize = b.standardOptimizeOption(.{});
+    build_options.build_lib = b.option(bool, "lib", "build the library") orelse false;
+    build_options.build_exe = b.option(bool, "exe", "build the executable") orelse false;
 
-    const exe_mod = b.createModule(.{
-        .root_source_file = b.path("src/main.zig"),
-        .target = target,
-        .optimize = optimize,
-    });
-
-    const exe = b.addExecutable(.{
-        .name = model_name,
-        .root_module = exe_mod,
-    });
-
-    exe_mod.addOptions("build_options", build_options);
-    exe.linkLibCpp();
-
-    // -------------------- params --------------------
-    const root_model = b.path("src/model");
-    const root_engine = b.path("tflm_tree");
-
-    // -------------------- include paths for the executable --------------------
-    exe.addIncludePath(b.path("include"));
-    exe.addIncludePath(b.path("src"));
-    exe.addIncludePath(b.path("."));
-    includePathToExecutable(
-        defs.tflm_tree, //root aka prefix
-        exe, // executable
-        defs.dir_endings,
-    );
-
-    // -------------------- include .cpp files --------------------
-    exe.addCSourceFiles(.{
-        .root = root_model,
-        .files = &.{ "model.cc", "tflm_wrapper.cpp" },
-        .flags = defs.tflm_cpp_flags,
-    });
-
-    exe.addCSourceFiles(.{
-        .root = root_engine,
-        .files = defs.micro_cpp_paths,
-        .flags = defs.tflm_cpp_flags,
-    });
-
-    // -------------------- include .c files --------------------
-    exe.addCSourceFiles(.{
-        .root = root_engine,
-        .files = &.{
-            "third_party/kissfft/kiss_fft.c",
-            "third_party/kissfft/tools/kiss_fftr.c",
-        },
-        .flags = defs.tflm_c_flags, // Use C flags, not C++ flags
-    });
-
-    b.installArtifact(exe);
-
-    // // Run command
-    // const run_cmd = b.addRunArtifact(exe);
-    // // run_cmd.step.dependOn(b.getInstallStep());
-    // if (b.args) |args| {
-    //     run_cmd.addArgs(args);
-    // }
-
-    // const run_step = b.step("run", "Run the app");
-    // run_step.dependOn(&run_cmd.step);
-
-    // ----------------------------------------------------------------------------------------------------
-    //                                        Create the static library
-    // ----------------------------------------------------------------------------------------------------
-
-    const lib = b.addStaticLibrary(.{
-        .name = "tflm_inference",
-        .root_source_file = b.path("src/inference_engine.zig"), // Your main source file
-        .target = target,
-        .optimize = optimize,
-    });
-
-    // -------------------- include paths for the library --------------------
-    lib.addIncludePath(b.path("include"));
-    lib.addIncludePath(b.path("src"));
-    lib.addIncludePath(b.path("."));
-    includePathToLib(
-        defs.tflm_tree, //root aka prefix
-        lib, // library
-        defs.dir_endings,
-    );
-
-    // -------------------- include .cpp files --------------------
-    lib.addCSourceFiles(.{
-        .root = root_model,
-        .files = &.{ "tflm_wrapper.cpp", "model.cc" },
-        .flags = defs.tflm_cpp_flags,
-    });
-
-    lib.addCSourceFiles(.{
-        .root = root_engine,
-        .files = defs.micro_cpp_paths,
-        .flags = defs.tflm_cpp_flags,
-    });
-
-    // -------------------- include .c files --------------------
-    lib.addCSourceFiles(.{
-        .root = root_engine,
-        .files = &.{
-            "third_party/kissfft/kiss_fft.c",
-            "third_party/kissfft/tools/kiss_fftr.c",
-        },
-        .flags = defs.tflm_c_flags, // Use C flags, not C++ flags
-    });
-
-    // Link C libraries that your code depends on
-    lib.linkLibC();
-    // If you need C++ (TensorFlow Lite is C++)
-    lib.linkLibCpp();
-
-    // Install the library
-    b.installArtifact(lib);
-
-    // Create a header file installation step
-    const install_headers = b.addInstallFile(
-        b.path("include/inference_engine.h"),
-        "include/inference_engine.h",
-    );
-
-    b.getInstallStep().dependOn(&install_headers.step);
-
-    // const lib_cmd = b.addRunArtifact(lib);
-    // lib_cmd.step.dependOn(b.getInstallStep());
-    // if (b.args) |args| {
-    //     lib_cmd.addArgs(args);
-    // }
-    // // Optional: Create a build step just for the library
-    // const lib_step = b.step("lib", "Build the static library");
-    // lib_step.dependOn(&lib_cmd.step);
-}
-
-inline fn collectFromDir(
-    b: *std.Build,
-    cwd: *std.fs.Dir,
-    prefix: []const u8,
-) !std.ArrayList([]const u8) {
-    var root_dir = cwd.openDir(prefix, .{ .iterate = true }) catch unreachable;
-    var list = std.ArrayList([]const u8).init(b.allocator);
-    std.debug.print("\n ------ START COLLECTING ------", .{});
-    try collect(b, root_dir, prefix, &list);
-    std.debug.print("\n ------ STOP COLLECTING ------", .{});
-    root_dir.close(); // Only close root_dir, not cwd fs!
-    return list;
-}
-
-fn collect(
-    b: *std.Build,
-    dir: std.fs.Dir,
-    prefix: []const u8,
-    list: *std.ArrayList([]const u8),
-) !void {
-    var it = dir.iterate();
-    std.debug.print("\nCollecting files from: {s}", .{prefix});
-    while (true) {
-        const entry = try it.next();
-        if (entry) |e| {
-            const name = e.name;
-
-            // Skip "." and ".."
-            if (std.mem.eql(u8, name, ".") or std.mem.eql(u8, name, "..")) {
-                continue;
-            }
-
-            // Skip non-UTF-8 names (shouldn't happen on Linux, but just in case)
-            if (!std.unicode.utf8ValidateSlice(name)) {
-                std.debug.print("\nSkipping invalid UTF-8 entry: {s}", .{name});
-                continue;
-            }
-
-            const full = std.fmt.allocPrint(b.allocator, "{s}/{s}", .{ prefix, name }) catch continue;
-            if (e.kind == .file and std.mem.endsWith(u8, name, ".cpp")) {
-                const slash_index = std.mem.indexOf(u8, full, "/") orelse 0;
-                const rel = full[slash_index + 1 ..];
-                std.debug.print("\nAdding: {s}", .{rel});
-
-                const new_path = try b.allocator.dupe(u8, rel);
-
-                try list.append(new_path);
-            } else if (e.kind == .directory) {
-                var sub = dir.openDir(name, .{ .iterate = true }) catch {
-                    b.allocator.free(full);
-                    continue;
-                };
-                try collect(b, sub, full, list);
-                sub.close();
-            }
-            b.allocator.free(full);
-        } else {
-            break; // No more entries
-        }
+    if (build_options.build_lib) {
+        std.debug.print("\n Building the lib of {s} ...", .{build_options.model_name});
+        lib_builder.build_lib(b, build_options);
     }
-}
-
-// // -------------------------- recursively collect all .cpp under tflm_tree/tensorflow --------------------------
-//     addCSourceFilesToExecutable(
-//         b,
-//         exe,
-//         defs.tflm_tree, // root
-//         &.{
-//             "tflm_tree/tensorflow", // recursively collect all .cpp under tflm_tree/tensorflow
-//             "tflm_tree/third_party", // recursively collect all .cpp under tflm_tree/thirth_party
-//             // "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
-//         },
-//         defs.tflm_flags,
-//     );
-
-inline fn includePathToExecutable(
-    comptime prefix: []const u8,
-    exe: *std.Build.Step.Compile,
-    comptime endings: []const []const u8,
-) void {
-    inline for (endings) |ending| {
-        exe.addIncludePath(std.Build.LazyPath{ .cwd_relative = prefix ++ ending });
+    if (build_options.build_exe) {
+        std.debug.print("\n Building the exe of {s} ...", .{build_options.model_name});
+        exe_builder.build_exe(b, build_options);
     }
-}
-
-inline fn includePathToLib(
-    comptime prefix: []const u8,
-    lib: *std.Build.Step.Compile,
-    comptime endings: []const []const u8,
-) void {
-    inline for (endings) |ending| {
-        lib.addIncludePath(std.Build.LazyPath{ .cwd_relative = prefix ++ ending });
-    }
-}
-
-inline fn addCSourceFilesToExecutable(
-    b: *std.Build,
-    exe: *std.Build.Step.Compile,
-    comptime root: []const u8,
-    comptime dir: []const []const u8,
-    comptime flags: []const []const u8,
-) void {
-    var cwd = std.fs.cwd();
-    inline for (dir) |d| {
-        var cpp_files_list = collectFromDir(b, &cwd, d) catch unreachable;
-        const cpp_files = cpp_files_list.toOwnedSlice() catch unreachable;
-        cpp_files_list.deinit();
-        exe.addCSourceFiles(.{
-            .root = std.Build.LazyPath{ .cwd_relative = root },
-            .files = cpp_files,
-            .flags = flags,
-        });
-    }
-}
-
-fn addCSourceFilesToLib(
-    b: *std.Build,
-    lib: *std.Build.Step.Compile,
-    comptime root: []const u8,
-    comptime dir: []const []const u8,
-    comptime flags: []const []const u8,
-) void {
-    var cwd = std.fs.cwd();
-    inline for (dir) |d| {
-        var cpp_files_list = collectFromDir(b, &cwd, d) catch unreachable;
-        const cpp_files = cpp_files_list.toOwnedSlice() catch unreachable;
-        cpp_files_list.deinit();
-        lib.addCSourceFiles(.{
-            .root = std.Build.LazyPath{ .cwd_relative = root },
-            .files = cpp_files,
-            .flags = flags,
-        });
+    if (!build_options.build_exe and !build_options.build_lib) {
+        std.debug.print("\n❌ add -Dlib and/or -Dexe depending on what you wanto to build\n", .{});
+        return;
     }
 }
