@@ -2,7 +2,7 @@ const std = @import("std");
 const infer = @import("inference_engine.zig");
 
 pub fn main() !void {
-    const arena_size = @floor(0.2 * 1024 * 1024); // 0.4 MB
+    const arena_size = @floor(0.8 * 1024 * 1024); // 0.4 MB
     _ = infer.inference_init(arena_size) orelse {
         std.debug.print("OOM initializing\n", .{});
         return;

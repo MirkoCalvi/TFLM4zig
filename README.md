@@ -28,3 +28,9 @@ python3 ~/tflite-micro/tensorflow/lite/micro/tools/project_generation/create_tfl
 ```
 
 
+## Nicla Vision
+```
+zig build -Dmodel_name="dummy" -Dtarget=thumb-freestanding-eabi -Dcpu=cortex_m4 -Doptimize=ReleaseSmall
+```
+
+

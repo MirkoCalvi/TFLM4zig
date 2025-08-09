@@ -1,4 +1,5 @@
 const std = @import("std");
+const defs = @import("build_defs.zig");
 
 pub fn build(b: *std.Build) void {
     // Define build options
@@ -28,98 +29,52 @@ pub fn build(b: *std.Build) void {
 
     // -------------------- params --------------------
     const root_model = b.path("src/model");
-
-    const tflm_tree = "/home/mirko/Documents/zig/tflm4zig/tflm_tree";
-    const dir_endings = &[_][]const u8{
-        "",
-        "/tensorflow",
-        "/tensorflow/lite",
-        "/tensorflow/lite/micro",
-        // -- Add all necessary include paths for lite/micro --
-        "/tensorflow/lite/micro/arena_allocators",
-        "/tensorflow/lite/micro/memory_planner",
-        "/tensorflow/lite/micro/tflite_bridge",
-        "/tensorflow/lite/micro/kernels",
-        // -- Add all necessary include paths for third_party --
-        "/third_party/flatbuffers/include",
-        "/third_party/gemmlowp",
-        "/third_party/ruy",
-        "/third_party/kissfft",
-        "/third_party/kissfft/tools",
-        // -- Add all necessary include paths for signal --
-        // "/signal",
-        // "/signal/micro/kernels",
-    };
-    const tflm_flags = &[_][]const u8{
-        "-std=c++17", //____________________________ Use the C++17 language standard (required by TFLM)
-        "-DTF_LITE_STATIC_MEMORY", //________________Allocate all tensors and work buffers in one static arena
-        "-DTF_LITE_DISABLE_X86_NEON", //_____________Disable x86 NEON optimizations (not available on MCUs)
-        "-DTF_LITE_MCU", //__________________________Enable MCU‐specific kernel implementations and memory management
-        "-DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK", //__Permit GEMMLOWP to use scalar (non‐SIMD) kernels when needed
-        "-Wno-unused-parameter", //__________________Suppress warnings for unused function parameters
-        "-Wno-missing-field-initializers", //________Suppress warnings for partially initialized structs
-        "-Wno-sign-compare", //______________________Suppress warnings when comparing signed vs unsigned values
-        "-Wno-unused-function", //___________________Suppress warnings for static/inline functions that aren’t called
-        "-Wno-unused-variable", //___________________Suppress warnings for variables that are declared but never used
-        "-fno-exceptions", //________________________Disable C++ exception support (reduces code size)
-        "-fno-rtti", //______________________________Disable runtime type information (no typeid/dynamic_cast)
-        "-fno-threadsafe-statics", //________________Don’t emit thread-safety guards for function-local statics
-        "-fmessage-length=0", //_____________________Don’t wrap diagnostic messages (purely cosmetic)
-        "-fno-delete-null-pointer-checks", //________Let optimizer assume null‐pointer dereference is UB
-        "-fomit-frame-pointer", //___________________Don’t keep a frame pointer register (saves bytes and a register)
-        "-Os", //____________________________________Optimize for smallest code size
-        "-ffunction-sections", //____________________Place each function in its own section for linker GC
-        "-fdata-sections", //________________________Place each data object in its own section for linker GC
-        "-flto", //__________________________________Enable link-time optimization across all translation units
-        "-fmerge-all-constants", //__________________Merge identical constants into a single section
-        "-fno-common", //____________________________Treat globals as individual symbols to aid dead-code stripping
-    };
+    const root_engine = b.path("tflm_tree");
 
     // -------------------- include paths for the executable --------------------
     exe.addIncludePath(b.path("include"));
     exe.addIncludePath(b.path("src"));
     exe.addIncludePath(b.path("."));
     includePathToExecutable(
-        tflm_tree, //root aka prefix
+        defs.tflm_tree, //root aka prefix
         exe, // executable
-        dir_endings,
+        defs.dir_endings,
     );
 
-    // -------------------------- recursively collect all .cpp under tflm_tree/tensorflow --------------------------
-    addCSourceFilesToExecutable(
-        b,
-        exe,
-        tflm_tree, // root
-        &.{
-            "tflm_tree/tensorflow", // recursively collect all .cpp under tflm_tree/tensorflow
-            "tflm_tree/third_party", // recursively collect all .cpp under tflm_tree/thirth_party
-            // "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
-        },
-        tflm_flags,
-    );
+    // -------------------- include .cpp files --------------------
     exe.addCSourceFiles(.{
         .root = root_model,
-        .files = &.{"model.cc"},
-        .flags = tflm_flags,
+        .files = &.{ "model.cc", "tflm_wrapper.cpp" },
+        .flags = defs.tflm_cpp_flags,
     });
 
     exe.addCSourceFiles(.{
-        .root = root_model,
-        .files = &.{"tflm_wrapper.cpp"},
-        .flags = tflm_flags,
+        .root = root_engine,
+        .files = defs.micro_cpp_paths,
+        .flags = defs.tflm_cpp_flags,
+    });
+
+    // -------------------- include .c files --------------------
+    exe.addCSourceFiles(.{
+        .root = root_engine,
+        .files = &.{
+            "third_party/kissfft/kiss_fft.c",
+            "third_party/kissfft/tools/kiss_fftr.c",
+        },
+        .flags = defs.tflm_c_flags, // Use C flags, not C++ flags
     });
 
     b.installArtifact(exe);
 
-    // Run command
-    const run_cmd = b.addRunArtifact(exe);
-    // run_cmd.step.dependOn(b.getInstallStep());
-    if (b.args) |args| {
-        run_cmd.addArgs(args);
-    }
+    // // Run command
+    // const run_cmd = b.addRunArtifact(exe);
+    // // run_cmd.step.dependOn(b.getInstallStep());
+    // if (b.args) |args| {
+    //     run_cmd.addArgs(args);
+    // }
 
-    const run_step = b.step("run", "Run the app");
-    run_step.dependOn(&run_cmd.step);
+    // const run_step = b.step("run", "Run the app");
+    // run_step.dependOn(&run_cmd.step);
 
     // ----------------------------------------------------------------------------------------------------
     //                                        Create the static library
@@ -137,32 +92,32 @@ pub fn build(b: *std.Build) void {
     lib.addIncludePath(b.path("src"));
     lib.addIncludePath(b.path("."));
     includePathToLib(
-        tflm_tree, //root aka prefix
+        defs.tflm_tree, //root aka prefix
         lib, // library
-        dir_endings,
+        defs.dir_endings,
     );
 
-    // -------------------------- recursively collect all .cpp under tflm_tree/tensorflow --------------------------
-    addCSourceFilesToLib(
-        b,
-        lib,
-        tflm_tree, // root
-        &.{
-            "tflm_tree/tensorflow", // recursively collect all .cpp under tflm_tree/tensorflow
-            "tflm_tree/third_party", // recursively collect all .cpp under tflm_tree/thirth_party
-            // "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
-        },
-        tflm_flags,
-    );
+    // -------------------- include .cpp files --------------------
     lib.addCSourceFiles(.{
         .root = root_model,
-        .files = &.{"model.cc"},
-        .flags = tflm_flags,
+        .files = &.{ "tflm_wrapper.cpp", "model.cc" },
+        .flags = defs.tflm_cpp_flags,
     });
+
     lib.addCSourceFiles(.{
-        .root = root_model,
-        .files = &.{"tflm_wrapper.cpp"},
-        .flags = tflm_flags,
+        .root = root_engine,
+        .files = defs.micro_cpp_paths,
+        .flags = defs.tflm_cpp_flags,
+    });
+
+    // -------------------- include .c files --------------------
+    lib.addCSourceFiles(.{
+        .root = root_engine,
+        .files = &.{
+            "third_party/kissfft/kiss_fft.c",
+            "third_party/kissfft/tools/kiss_fftr.c",
+        },
+        .flags = defs.tflm_c_flags, // Use C flags, not C++ flags
     });
 
     // Link C libraries that your code depends on
@@ -181,14 +136,14 @@ pub fn build(b: *std.Build) void {
 
     b.getInstallStep().dependOn(&install_headers.step);
 
-    const lib_cmd = b.addRunArtifact(lib);
-    lib_cmd.step.dependOn(b.getInstallStep());
-    if (b.args) |args| {
-        lib_cmd.addArgs(args);
-    }
-    // Optional: Create a build step just for the library
-    const lib_step = b.step("lib", "Build the static library");
-    lib_step.dependOn(&lib_cmd.step);
+    // const lib_cmd = b.addRunArtifact(lib);
+    // lib_cmd.step.dependOn(b.getInstallStep());
+    // if (b.args) |args| {
+    //     lib_cmd.addArgs(args);
+    // }
+    // // Optional: Create a build step just for the library
+    // const lib_step = b.step("lib", "Build the static library");
+    // lib_step.dependOn(&lib_cmd.step);
 }
 
 inline fn collectFromDir(
@@ -252,6 +207,19 @@ fn collect(
         }
     }
 }
+
+// // -------------------------- recursively collect all .cpp under tflm_tree/tensorflow --------------------------
+//     addCSourceFilesToExecutable(
+//         b,
+//         exe,
+//         defs.tflm_tree, // root
+//         &.{
+//             "tflm_tree/tensorflow", // recursively collect all .cpp under tflm_tree/tensorflow
+//             "tflm_tree/third_party", // recursively collect all .cpp under tflm_tree/thirth_party
+//             // "tflm_tree/signal", // recursively collect all .cpp under tflm_tree/signal
+//         },
+//         defs.tflm_flags,
+//     );
 
 inline fn includePathToExecutable(
     comptime prefix: []const u8,
