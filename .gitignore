@@ -8,3 +8,5 @@ zig-out/bin/
 
 *.onnx
 *.cc
+
+tflite-micro/

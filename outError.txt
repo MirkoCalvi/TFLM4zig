@@ -1,0 +1,591 @@
+Target is NOT native. 
+
+ Building the lib of mobilenet_v2 ...install
++- install mobilenet_v2
+   +- zig build-lib mobilenet_v2 ReleaseSmall thumb-freestanding-eabi 64 errors
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/hexdump.h:18:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/hexdump.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/hexdump.cc:15:
+#include "tensorflow/lite/micro/hexdump.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/kiss_fft.h:4:10: error: 'stdlib.h' file not found
+#include <stdlib.h>
+         ^~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/tools/kiss_fftr.c:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/tools/kiss_fftr.c:15:
+#include "kiss_fftr.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/tools/kiss_fftr.h:4:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/tools/kiss_fftr.h:4:
+#include "kiss_fft.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/kiss_fft.h:4:10: error: 'stdlib.h' file not found
+#include <stdlib.h>
+         ^~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/kiss_fft.c:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/kiss_fft.c:16:
+#include "_kiss_fft_guts.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/_kiss_fft_guts.h:22:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/_kiss_fft_guts.h:22:
+#include "kiss_fft.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/sub_common.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/sub_common.cc:16:
+#include "tensorflow/lite/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:
+#include "tensorflow/lite/core/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:
+#include "tensorflow/lite/core/c/common.h"  // IWYU pragma: export
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/pad_common.cc:15:10: error: 'limits' file not found
+#include <limits>
+         ^~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter.h:18:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/src/model/tflm_wrapper.cpp:4:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/src/model/tflm_wrapper.cpp:4:
+#include "tensorflow/lite/micro/micro_interpreter.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/reference/pad.h:19:10: error: 'vector' file not found
+#include <vector>
+         ^~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/pad.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/pad.cc:15:
+#include "tensorflow/lite/kernels/internal/reference/pad.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/sub.h:19:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/sub.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/sub.cc:16:
+#include "tensorflow/lite/micro/kernels/sub.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/mul.h:19:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/mul.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/mul.cc:16:
+#include "tensorflow/lite/micro/kernels/mul.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/mul_common.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/mul_common.cc:16:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/conv_common.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/conv_common.cc:16:
+#include "tensorflow/lite/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:
+#include "tensorflow/lite/core/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:
+#include "tensorflow/lite/core/c/common.h"  // IWYU pragma: export
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/micro_tensor_utils.h:25:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/micro_tensor_utils.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/micro_tensor_utils.cc:15:
+#include "tensorflow/lite/micro/kernels/micro_tensor_utils.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/fully_connected.h:18:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/fully_connected.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/fully_connected.cc:16:
+#include "tensorflow/lite/micro/kernels/fully_connected.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/fully_connected_common.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/fully_connected_common.cc:16:
+#include "tensorflow/lite/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:
+#include "tensorflow/lite/core/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:
+#include "tensorflow/lite/core/c/common.h"  // IWYU pragma: export
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/kernel_util.h:20:10: error: 'limits' file not found
+#include <limits>
+         ^~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/kernel_util.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/kernel_util.cc:15:
+#include "tensorflow/lite/kernels/kernel_util.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/portable_tensor_utils.h:19:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/tensor_utils.cc:24:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/tensor_utils.cc:24:
+#include "tensorflow/lite/kernels/internal/portable_tensor_utils.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/depthwise_conv_common.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/depthwise_conv_common.cc:16:
+#include "tensorflow/lite/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:
+#include "tensorflow/lite/core/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:
+#include "tensorflow/lite/core/c/common.h"  // IWYU pragma: export
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/tensor_ctypes.h:18:10: error: 'vector' file not found
+#include <vector>
+         ^~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/tensor_ctypes.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/tensor_ctypes.cc:16:
+#include "tensorflow/lite/kernels/internal/tensor_ctypes.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/reference/add.h:18:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/add.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/add.cc:16:
+#include "tensorflow/lite/kernels/internal/reference/add.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/runtime_shape.h:18:10: error: 'cstring' file not found
+#include <cstring>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/runtime_shape.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/runtime_shape.cc:16:
+#include "tensorflow/lite/kernels/internal/runtime_shape.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/quantization_util.h:18:10: error: 'cmath' file not found
+#include <cmath>
+         ^~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/quantization_util.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/quantization_util.cc:16:
+#include "tensorflow/lite/kernels/internal/quantization_util.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cc:15:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_runner.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_runner.cc:16:
+#include "tensorflow/lite/micro/kernels/kernel_runner.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_runner.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_runner.h:19:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/reference/comparisons.h:18:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/reference/comparisons.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/reference/comparisons.cc:16:
+#include "tensorflow/lite/kernels/internal/reference/comparisons.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/depthwise_conv.h:19:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/depthwise_conv.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/depthwise_conv.cc:16:
+#include "tensorflow/lite/micro/kernels/depthwise_conv.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/portable_tensor_utils.h:19:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/portable_tensor_utils.cc:18:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/portable_tensor_utils.cc:18:
+#include "tensorflow/lite/kernels/internal/portable_tensor_utils.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/add_common.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/add_common.cc:16:
+#include "tensorflow/lite/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/builtin_op_data.h:21:
+#include "tensorflow/lite/core/c/builtin_op_data.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/builtin_op_data.h:24:
+#include "tensorflow/lite/core/c/common.h"  // IWYU pragma: export
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/conv.h:19:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/conv.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/conv.cc:16:
+#include "tensorflow/lite/micro/kernels/conv.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.cc:16:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/core/api/error_reporter.h:18:10: error: 'cstdarg' file not found
+#include <cstdarg>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/core/api/error_reporter.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/core/api/error_reporter.cc:15:
+#include "tensorflow/compiler/mlir/lite/core/api/error_reporter.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/common.h:18:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/common.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/common.cc:16:
+#include "tensorflow/lite/kernels/internal/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h:18:10: error: 'cstdarg' file not found
+#include <cstdarg>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.cc:16:
+#include "tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/tensor_utils.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/tensor_utils.cc:16:
+#include "tensorflow/lite/core/api/tensor_utils.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/tensor_utils.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/tensor_utils.h:19:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_utils.h:19:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.cc:16:
+#include "tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.h:20:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.h:20:
+#include "tensorflow/lite/micro/memory_planner/memory_plan_struct.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/memory_plan_struct.h:22:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/memory_plan_struct.h:22:
+#include "tensorflow/lite/micro/micro_utils.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/linear_memory_planner.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/linear_memory_planner.cc:16:
+#include "tensorflow/lite/micro/memory_planner/linear_memory_planner.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/linear_memory_planner.h:20:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/linear_memory_planner.h:20:
+#include "tensorflow/lite/micro/memory_planner/micro_memory_planner.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/micro_memory_planner.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/micro_memory_planner.h:19:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/greedy_memory_planner.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/greedy_memory_planner.cc:16:
+#include "tensorflow/lite/micro/memory_planner/greedy_memory_planner.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/greedy_memory_planner.h:20:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/greedy_memory_planner.h:20:
+#include "tensorflow/lite/micro/memory_planner/micro_memory_planner.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/micro_memory_planner.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/micro_memory_planner.h:19:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h:19:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.cc:16:
+#include "tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h:19:
+#include "tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_util.h:19:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_util.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_util.cc:16:
+#include "tensorflow/lite/micro/kernels/kernel_util.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/flatbuffer_conversions.h:22:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.cc:15:
+#include "tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.h:19:
+#include "tensorflow/lite/core/api/flatbuffer_conversions.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/flatbuffers/include/flatbuffers/flatbuffers.h:20:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/schema/schema_utils.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/schema/schema_utils.cc:15:
+#include "tensorflow/compiler/mlir/lite/schema/schema_utils.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/schema/schema_utils.h:18:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/schema/schema_utils.h:18:
+#include "flatbuffers/flatbuffers.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h:19:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.cc:16:
+#include "tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h:18:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.cc:15:
+#include "tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/flatbuffer_conversions.h:22:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/flatbuffer_conversions.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/flatbuffer_conversions.cc:16:
+#include "tensorflow/lite/core/api/flatbuffer_conversions.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/debug_log.h:19:10: error: 'cstdarg' file not found
+#include <cstdarg>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/debug_log.cc:33:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/debug_log.cc:33:
+#include "tensorflow/lite/micro/debug_log.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/mock_micro_graph.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/mock_micro_graph.cc:16:
+#include "tensorflow/lite/micro/mock_micro_graph.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/mock_micro_graph.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/mock_micro_graph.h:19:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h:18:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.cc:15:
+#include "tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_time.h:18:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_time.cc:27:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_time.cc:27:
+#include "tensorflow/lite/micro/micro_time.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/test_helpers.h:19:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/test_helpers.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/test_helpers.cc:16:
+#include "tensorflow/lite/micro/test_helpers.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_profiler_interface.h:19:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_profiler.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_profiler.cc:15:
+#include "tensorflow/lite/micro/micro_profiler.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_profiler.h:20:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_profiler.h:20:
+#include "tensorflow/lite/micro/micro_profiler_interface.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_helpers.h:18:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_helpers.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_helpers.cc:16:
+#include "tensorflow/lite/micro/memory_helpers.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_log.h:19:10: error: 'cstdarg' file not found
+#include <cstdarg>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_log.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_log.cc:16:
+#include "tensorflow/lite/micro/micro_log.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/flatbuffers/include/flatbuffers/flatbuffers.h:20:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/flatbuffer_utils.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/flatbuffer_utils.cc:16:
+#include "tensorflow/lite/micro/flatbuffer_utils.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/flatbuffer_utils.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/flatbuffer_utils.h:19:
+#include "flatbuffers/flatbuffers.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h:19:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/recording_micro_allocator.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/recording_micro_allocator.cc:16:
+#include "tensorflow/lite/micro/recording_micro_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/recording_micro_allocator.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/recording_micro_allocator.h:19:
+#include "tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.h:19:
+#include "tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/test_helper_custom_ops.h:19:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/test_helper_custom_ops.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/test_helper_custom_ops.cc:16:
+#include "tensorflow/lite/micro/test_helper_custom_ops.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_utils.h:19:10: error: 'algorithm' file not found
+#include <algorithm>
+         ^~~~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_utils.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_utils.cc:16:
+#include "tensorflow/lite/micro/micro_utils.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/fake_micro_context.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/fake_micro_context.cc:16:
+#include "tensorflow/lite/micro/fake_micro_context.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/fake_micro_context.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/fake_micro_context.h:19:
+#include "tensorflow/lite/micro/micro_context.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_context.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_context.h:19:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_op_resolver.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_op_resolver.cc:16:
+#include "tensorflow/lite/micro/micro_op_resolver.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_op_resolver.h:18:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_op_resolver.h:18:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_resource_variable.h:19:10: error: 'cstdint' file not found
+#include <cstdint>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_resource_variable.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_resource_variable.cc:16:
+#include "tensorflow/lite/micro/micro_resource_variable.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocator.h:18:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_graph.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_graph.cc:16:
+#include "tensorflow/lite/micro/micro_interpreter_graph.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_graph.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_graph.h:19:
+#include "tensorflow/lite/micro/micro_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocator.h:18:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocator.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocator.cc:16:
+#include "tensorflow/lite/micro/micro_allocator.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_context.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_context.cc:16:
+#include "tensorflow/lite/micro/micro_interpreter_context.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_context.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_context.h:19:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_context.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_context.cc:16:
+#include "tensorflow/lite/micro/micro_context.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_context.h:19:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_context.h:19:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter.h:18:10: error: 'cstddef' file not found
+#include <cstddef>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter.cc:15:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter.cc:15:
+#include "tensorflow/lite/micro/micro_interpreter.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.h:1518:10: error: 'utility' file not found
+#include <utility>
+         ^~~~~~~~~~
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocation_info.cc:16:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocation_info.cc:16:
+#include "tensorflow/lite/micro/micro_allocation_info.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocation_info.h:18:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocation_info.h:18:
+#include "tensorflow/lite/c/common.h"
+         ^
+/home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:10: note: in file included from /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/c/common.h:31:
+#include "tensorflow/lite/core/c/common.h"
+         ^
+error: warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/63a76a6aa335fd47-hexdump.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/d8ca2c85094eb9a3-kiss_fftr.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/efa206ce1daf8c9c-kiss_fft.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/9f16adc661d31488-sub_common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/b3a0cebb2434bbcd-pad_common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/898592278ad17961-tflm_wrapper.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/2a7dd0a0af17ce24-pad.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/da78ff64374f5ddc-sub.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/1a283f8861f7212-mul.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/8657ef3569f9ecf3-mul_common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/b6dad99c9bc898b1-conv_common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/3d2f4167dd087fec-micro_tensor_utils.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/6b368b8433d1a316-fully_connected.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/a0f5d5f805131fa7-fully_connected_common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/9d1de47d5bc96e28-kernel_util.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/4b79b53c390ced3-tensor_utils.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/f3b8055f5eb3979b-depthwise_conv_common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/368d741eed2daf90-tensor_ctypes.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/8942f2a3ab94c2ba-add.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/b82a535db59b736b-runtime_shape.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/9bcf622940c205ad-quantization_util.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/f55b36b6c8f80809-portable_tensor_utils.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/63c552c65421172d-kernel_runner.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/8a73a30410f91f73-comparisons.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/5ac8f580efc40f33-depthwise_conv.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/64a19d3af85355b9-portable_tensor_utils.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/e618d56b15d42d90-add_common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/817422d238e81565-conv.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/ed96cab8e5552b2d-common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/d2a8c2fb8579de88-error_reporter.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/1501ba6ba49c82f4-common.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/f54f183517eecc71-micro_error_reporter.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/7bcd2546e28f460e-tensor_utils.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/5dc46e9e8880a7f7-non_persistent_buffer_planner_shim.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/e938f4207e79a32a-linear_memory_planner.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/2ac78da7e7dc4953-greedy_memory_planner.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/ee7c3ac80620fa09-recording_single_arena_buffer_allocator.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/34f566b3327cb685-kernel_util.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/7c08265f893468a2-flatbuffer_conversions_bridge.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/819dfdf32b529ba2-schema_utils.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/2294e60d7798ce71-single_arena_buffer_allocator.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/5a1d0be4778ca5d9-non_persistent_arena_buffer_allocator.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/c5be2c757eff0d11-flatbuffer_conversions.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/d3939de4ed264c93-debug_log.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/160e8f742166638c-mock_micro_graph.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/1b903f3fbac0edc6-persistent_arena_buffer_allocator.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/fe379ed4eee7251-micro_time.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/f9c572353d857163-test_helpers.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/dc563b47553d49b6-micro_profiler.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/198f73684dd39ef5-memory_helpers.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/c1dbd3d8f073a728-micro_log.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/7ef9c5c0e35636cc-flatbuffer_utils.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/8f1594831d5dcb2e-recording_micro_allocator.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/a6d9704ae9db7929-test_helper_custom_ops.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/9118d2096d040a81-micro_utils.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/75fcda009d5ef851-fake_micro_context.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/f7b9b6088e96fec7-micro_op_resolver.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/506c55f7e7e5df74-micro_resource_variable.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/954e3c2989dee9b7-micro_interpreter_graph.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/1c037a041a50150-micro_allocator.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/733fda5c985cd23f-micro_interpreter_context.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/c6a9d6e8e4dd77f1-micro_context.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/a7460acf20fca460-micro_interpreter.o.d': FileNotFound
+warning(compilation): failed to delete '/home/mirko/Documents/zig/tflm4zig/.zig-cache/tmp/3a47009d48b2a20a-micro_allocation_info.o.d': FileNotFound
+
+error: the following command failed with 64 compilation errors:
+/home/mirko/Documents/zig/zig-linux-x86_64-0.14.0/zig build-lib -cflags -std=c++17 -DTF_LITE_MCU -DTF_LITE_STATIC_MEMORY -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wno-unused-parameter -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-function -Wno-unused-variable -Wno-implicit-function-declaration -- /home/mirko/Documents/zig/tflm4zig/src/model/tflm_wrapper.cpp /home/mirko/Documents/zig/tflm4zig/src/model/model.cc -cflags -std=c++17 -DTF_LITE_MCU -DTF_LITE_STATIC_MEMORY -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wno-unused-parameter -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-function -Wno-unused-variable -Wno-implicit-function-declaration -- /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocation_info.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_allocator.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_context.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_context.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_interpreter_graph.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_log.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_op_resolver.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_profiler.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_resource_variable.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_time.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/micro_utils.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/flatbuffer_utils.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/system_setup.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/debug_log.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/fake_micro_context.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/hexdump.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_helpers.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/recording_micro_allocator.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/test_helper_custom_ops.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/test_helpers.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/mock_micro_graph.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/non_persistent_arena_buffer_allocator.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/persistent_arena_buffer_allocator.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocator/recording_single_arena_buffer_allocator.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/greedy_memory_planner.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/linear_memory_planner.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge/flatbuffer_conversions_bridge.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/core/api/error_reporter.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/compiler/mlir/lite/schema/schema_utils.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/flatbuffer_conversions.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/api/tensor_utils.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/core/c/common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/portable_tensor_utils.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/quantization_util.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/reference/comparisons.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/runtime_shape.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/tensor_ctypes.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/internal/tensor_utils.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/kernels/kernel_util.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_util.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/kernel_runner.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/micro_tensor_utils.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/add_common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/add.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/conv_common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/conv.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/depthwise_conv_common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/depthwise_conv.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/fully_connected_common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/fully_connected.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/mul_common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/mul.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/pad_common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/pad.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/sub_common.cc /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels/sub.cc -cflags -std=c99 -DTF_LITE_MCU -DTF_LITE_STATIC_MEMORY -- /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/kiss_fft.c /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/tools/kiss_fftr.c -OReleaseSmall -target thumb-freestanding-eabi -mcpu cortex_m4 -I /home/mirko/Documents/zig/tflm4zig/include -I /home/mirko/Documents/zig/tflm4zig/src -I /home/mirko/Documents/zig/tflm4zig -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/arena_allocators -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/memory_planner -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/tflite_bridge -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/tensorflow/lite/micro/kernels -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/flatbuffers/include -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/gemmlowp -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/ruy -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft -I /home/mirko/Documents/zig/tflm4zig/mcu_tflm_tree/third_party/kissfft/tools -Mroot=/home/mirko/Documents/zig/tflm4zig/src/inference_engine.zig -lc --cache-dir /home/mirko/Documents/zig/tflm4zig/.zig-cache --global-cache-dir /home/mirko/.cache/zig --name mobilenet_v2 -static --zig-lib-dir /home/mirko/Documents/zig/zig-linux-x86_64-0.14.0/lib/ --listen=- 
+Build Summary: 0/3 steps succeeded; 1 failed
+install transitive failure
++- install mobilenet_v2 transitive failure
+   +- zig build-lib mobilenet_v2 ReleaseSmall thumb-freestanding-eabi 64 errors
+error: the following build command failed with exit code 1:
+/home/mirko/Documents/zig/tflm4zig/.zig-cache/o/e023585d38cbe34bb0fdccc450f6d2af/build /home/mirko/Documents/zig/zig-linux-x86_64-0.14.0/zig /home/mirko/Documents/zig/zig-linux-x86_64-0.14.0/lib /home/mirko/Documents/zig/tflm4zig /home/mirko/Documents/zig/tflm4zig/.zig-cache /home/mirko/.cache/zig --seed 0x2925543c -Z64a7d293b768154f -Dlib -Dmodel_name=mobilenet_v2 -Doptimize=ReleaseSmall -Dtarget=thumb-freestanding-eabi -Dcpu=cortex_m4
